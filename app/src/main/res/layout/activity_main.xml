@@ -5,16 +5,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.xmfy.yzubookshop.MainActivity">
 
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/White"
-        android:id="@+id/main_vp"/>
-
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_above="@id/bottom_navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/White"
+        android:id="@+id/main_vp"/>
+
 
 </RelativeLayout>

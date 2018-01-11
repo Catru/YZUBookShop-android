@@ -1,10 +1,11 @@
 package com.example.xmfy.yzubookshop.module.news;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,15 +22,26 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private List<News> newsList;
     private ImageLoader imageLoader;
+    private Context context;
 
-    public NewsAdapter(List<News> newsList, RecyclerView recyclerView) {
+    public NewsAdapter(Context context, List<News> newsList, RecyclerView recyclerView) {
+        this.context = context;
         imageLoader = new ImageLoader(recyclerView, ImageLoader.TYPE_NEWS);
         this.newsList = newsList;
     }
 
     @Override
-    public NewsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NewsAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news, parent, false);
+        NewsAdapter.ViewHolder viewHolder = new ViewHolder(v);
+        viewHolder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, NewsActivity.class);
+                intent.putExtra("url", view.getTag()+"");
+                context.startActivity(intent);
+            }
+        });
         return new ViewHolder(v);
     }
 

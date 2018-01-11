@@ -46,7 +46,7 @@ public class NewsFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private int BANNER_SIZE = 5;
-    private int NEWS_SIZE = 5;
+    private int NEWS_SIZE = 10;
     private String STORAGE_FOLDER = "banner";
 
 
@@ -165,7 +165,7 @@ public class NewsFragment extends Fragment {
             FormedData<List<News>> formedData = gson.fromJson(data, new TypeToken<FormedData<List<News>>>(){}.getType());
             mRecyclerView = view.findViewById(R.id.view_newslist);
             mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
-            mAdapter = new NewsAdapter(formedData.getData(), mRecyclerView);
+            mAdapter = new NewsAdapter(getActivity(), formedData.getData(), mRecyclerView);
             mRecyclerView.setLayoutManager(mLayoutManager);
             mRecyclerView.setAdapter(mAdapter);
         }
