@@ -8,4 +8,9 @@
     <color name="LightGreen">#B3D7D2</color>
     <color name="White">#F5F5F5</color>
     <color name="Black">#000000</color>
+    <color name="border_clo">#ccc</color>
+    <color name="text_clo">#333</color>
+    <color name="text_grey_darker">#4c4c4c</color>
+    <color name="LightSkyBlue">#87CEFA</color>
+    <color name="SpringGreen">#3CB371</color>
 </resources>

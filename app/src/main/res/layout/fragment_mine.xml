@@ -1,13 +1,81 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.example.xmfy.yzubookshop.widget.CustomToolBar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.xmfy.yzubookshop.fragments.MineFragment">
+    android:orientation="vertical"
+    app:title_text="个   人"
+    app:title_visible="true"
+    app:right_tv_visible="true"
+    app:right_tv_text="登 录">
 
     <!-- TODO: Update blank fragment layout -->
+    <widget.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/circleImageView"
+        android:layout_marginTop="50dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher"
+        app:border_width="2dp"
+        app:border_color="#ccc"
+        />
     <TextView
+        android:id="@+id/tv_login_infor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_clo"
+        android:textSize="20sp"
+        android:text="您尚未登录!"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="50dp"
+        />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="mine" />
+        android:orientation="vertical"
+        android:background="#F0F3F6"
+        >
 
-</FrameLayout>
+
+        <LinearLayout style="@style/wrap_layout" >
+            <!-- 上圆角-->
+            <LinearLayout style="@style/top_layout"
+                android:id="@+id/ll_personal_infor">
+                <TextView style="@style/usertext" android:text="个性资料" />
+                <ImageView style="@style/img_arrow"/>
+            </LinearLayout>
+
+            <!-- 分割线 -->
+            <View style="@style/bg_line"/>
+            <!-- 无圆角-->
+            <LinearLayout style="@style/mid_layout"
+                android:id="@+id/ll_mycollection">
+                <TextView style="@style/usertext" android:text="我的收藏" />
+                <ImageView style="@style/img_arrow"/>
+            </LinearLayout>
+            <View style="@style/bg_line"/>
+            <!-- 下圆角-->
+            <LinearLayout style="@style/bottom_layout">
+                <TextView style="@style/usertext" android:text="地址管理" />
+                <ImageView style="@style/img_arrow"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- 全圆角-->
+        <LinearLayout style="@style/wrap_layout">
+            <LinearLayout style="@style/single_layout">
+                <TextView style="@style/usertext" android:text="辅助功能"/>
+                <ImageView style="@style/img_arrow"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.example.xmfy.yzubookshop.widget.CustomToolBar>
