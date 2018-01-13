@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.xmfy.yzubookshop.R;
-import com.example.xmfy.yzubookshop.module.Login.LoginActivity;
+import com.example.xmfy.yzubookshop.module.login.LoginActivity;
 
 /**
  * Created by xmfy on 2018/1/3.

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomToolBar">
+        <attr name="left_btn_visible" format="boolean"/>
+        <attr name="left_btn_src" format="reference|color"/>
+        <attr name="left_tv_visible" format="boolean"/>
+        <attr name="left_tv_text" format="string"/>
+        <attr name="right_btn_visible" format="boolean"/>
+        <attr name="right_btn_src" format="reference|color"/>
+        <attr name="right_tv_visible" format="boolean"/>
+        <attr name="right_tv_text" format="string"/>
+        <attr name="title_visible" format="boolean"/>
+        <attr name="title_text" format="string"/>
+        <attr name="barBackground" format="color|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+</resources>
