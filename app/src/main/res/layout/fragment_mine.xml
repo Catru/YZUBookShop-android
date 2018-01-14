@@ -44,7 +44,8 @@
 
         <LinearLayout style="@style/wrap_layout" >
             <!-- 上圆角-->
-            <LinearLayout style="@style/top_layout"
+            <LinearLayout
+                style="@style/top_layout"
                 android:id="@+id/ll_personal_infor">
                 <TextView style="@style/usertext" android:text="个性资料" />
                 <ImageView style="@style/img_arrow"/>
@@ -60,7 +61,8 @@
             </LinearLayout>
             <View style="@style/bg_line"/>
             <!-- 下圆角-->
-            <LinearLayout style="@style/bottom_layout">
+            <LinearLayout style="@style/bottom_layout"
+                android:id="@+id/ll_receive_address">
                 <TextView style="@style/usertext" android:text="地址管理" />
                 <ImageView style="@style/img_arrow"/>
             </LinearLayout>

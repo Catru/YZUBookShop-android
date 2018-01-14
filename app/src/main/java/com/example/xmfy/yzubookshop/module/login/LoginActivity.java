@@ -3,12 +3,19 @@ package com.example.xmfy.yzubookshop.module.login;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xmfy.yzubookshop.R;
+import com.example.xmfy.yzubookshop.model.FormedData;
+import com.example.xmfy.yzubookshop.model.User;
+import com.example.xmfy.yzubookshop.net.AsyncResponse;
+import com.example.xmfy.yzubookshop.net.LoginAsyncTask;
+import com.example.xmfy.yzubookshop.utils.LoginUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -45,5 +52,38 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String account = et_account.getText().toString().trim();
+                String pwd = et_pwd.getText().toString().trim();
+                if (account.length()==0 || pwd.length()==0){
+                    Toast.makeText(LoginActivity.this, "账号或密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                LoginAsyncTask task = new LoginAsyncTask();
+                task.setOnAsyncResponse(new AsyncResponse<User>() {
+                    @Override
+                    public void onDataReceivedSuccess(FormedData<User> formedData) {
+                        if (!formedData.isSuccess())
+                            Toast.makeText(LoginActivity.this, formedData.getError(), Toast.LENGTH_SHORT).show();
+                        else{
+                            User usr = formedData.getData();
+                            Toast.makeText(LoginActivity.this, "欢迎用户: "+usr.getUsername(), Toast.LENGTH_SHORT).show();
+                            LoginUtils.saveUser(getSharedPreferences("User", MODE_PRIVATE), usr);
+                            LoginActivity.this.finish();
+                        }
+                    }
+
+                    @Override
+                    public void onDataReceivedFailed() {
+                        Toast.makeText(LoginActivity.this, "网络延迟", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                task.execute(account, pwd);
+            }
+        });
     }
+
+
 }

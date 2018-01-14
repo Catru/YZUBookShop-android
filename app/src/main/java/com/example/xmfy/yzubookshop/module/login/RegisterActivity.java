@@ -15,6 +15,7 @@ import com.example.xmfy.yzubookshop.global.AppConstants;
 import com.example.xmfy.yzubookshop.model.FormedData;
 import com.example.xmfy.yzubookshop.model.User;
 import com.example.xmfy.yzubookshop.net.AsyncResponse;
+import com.example.xmfy.yzubookshop.utils.LoginUtils;
 
 import java.io.IOException;
 
@@ -73,16 +74,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String username = et_username.getText().toString().trim();
         String gender = rb_male.isChecked()? "男" : "女";
         String phone = et_phone.getText().toString().trim();
-        User user = new User(account, pwd, username, gender, phone, "");
+        final User user = new User(account, pwd, username, gender, phone, "");
         RegisterAsyncTask task = new RegisterAsyncTask();
         task.execute(user);
         task.setRegisterResponse(new RegisterResponse() {
             @Override
-            public void onDataReceivedSuccess(Integer result) {
+            public void onDataReceivedSuccess(Integer result, User usr) {
                 if (result == 0)
                     Toast.makeText(RegisterActivity.this, "注册失败,请稍后重试", Toast.LENGTH_SHORT).show();
                 else{
                     Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                    LoginUtils.saveUser(getSharedPreferences("User", MODE_PRIVATE), usr);
                     RegisterActivity.this.finish();
                 }
             }
@@ -93,11 +95,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private class RegisterAsyncTask extends AsyncTask<User, Void, Integer>{
 
         public RegisterResponse registerResponse;
+        public User user;
 
         @Override
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
-            registerResponse.onDataReceivedSuccess(integer);
+            registerResponse.onDataReceivedSuccess(integer, user);
         }
 
         public void setRegisterResponse(RegisterResponse registerResponse) {
@@ -106,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected Integer doInBackground(User... users) {
-            User user = users[0];
+            user = users[0];
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
                     .add("account", user.getAccount())
@@ -133,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private interface RegisterResponse{
-        void onDataReceivedSuccess(Integer integer);
+        void onDataReceivedSuccess(Integer integer, User user);
     }
     
 }

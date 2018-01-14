@@ -12,4 +12,6 @@ public class AppConstants {
     public static final String NEWS_ADDRESS = "http://192.168.1.100:8080/news";
 
     public static final String REGISTER_ADDRESS = "http://192.168.1.100:8080/user/register";
+
+    public static final String LOGIN_ADDRESS = "http://192.168.1.100:8080/user/login";
 }
