@@ -1,9 +1,8 @@
-package com.example.xmfy.yzubookshop.module.login;
+package com.example.xmfy.yzubookshop.module.user;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,18 +11,14 @@ import android.widget.Toast;
 
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.global.AppConstants;
-import com.example.xmfy.yzubookshop.model.FormedData;
 import com.example.xmfy.yzubookshop.model.User;
-import com.example.xmfy.yzubookshop.net.AsyncResponse;
 import com.example.xmfy.yzubookshop.utils.LoginUtils;
 
 import java.io.IOException;
 
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{

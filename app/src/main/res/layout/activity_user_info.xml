@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.xmfy.yzubookshop.widget.CustomToolBar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:left_btn_src="@drawable/icon_back"
+    app:left_btn_visible="true"
+    app:title_text="个人信息"
+    app:title_visible="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/White">
+
+        <TableLayout
+            android:id="@+id/TableLayout_Infor"
+            android:divider="@drawable/table_layout_divider"
+            android:showDividers="middle|end"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="1.0dip"
+            android:shrinkColumns="0"
+            android:stretchColumns="0">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2.0dip"
+                android:layout_marginRight="2.0dip"
+                android:paddingBottom="16.0dip"
+                android:paddingTop="16.0dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:drawableLeft="@mipmap/infor_account"
+                    android:drawablePadding="10.0dip"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="17.0dip"
+                    android:text="账号"
+                    android:textColor="@color/text_clo"
+                    android:textSize="20.0sp" />
+                <TextView
+                    android:id="@+id/infor_account"
+                    android:layout_gravity="right|center_vertical"
+                    android:textColor="@color/text_grey"
+                    android:textSize="17.0sp"
+                    android:hint="账号"
+                    android:paddingRight="5dp"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/row_username"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2.0dip"
+                android:layout_marginRight="2.0dip"
+                android:paddingBottom="16.0dip"
+                android:paddingTop="16.0dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:drawableLeft="@mipmap/infor_username"
+                    android:drawablePadding="10.0dip"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="17.0dip"
+                    android:text="用户名"
+                    android:textColor="@color/text_clo"
+                    android:textSize="20.0sp" />
+                <TextView
+                    android:id="@+id/infor_username"
+                    android:layout_gravity="right|center_vertical"
+                    android:textColor="@color/text_grey"
+                    android:textSize="17.0sp"
+                    android:hint="用户名"
+                    android:paddingRight="5dp"/>
+
+                <ImageButton
+                    android:id="@+id/infor_username_forward"
+                    android:src="@mipmap/infor_forward"
+                    android:background="@color/White"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2.0dip"
+                android:layout_marginRight="2.0dip"
+                android:paddingBottom="16.0dip"
+                android:paddingTop="16.0dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:drawableLeft="@mipmap/infor_gender"
+                    android:drawablePadding="10.0dip"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="17.0dip"
+                    android:text="性别"
+                    android:textColor="@color/text_clo"
+                    android:textSize="20.0sp" />
+                <TextView
+                    android:id="@+id/infor_gender"
+                    android:layout_gravity="right|center_vertical"
+                    android:textColor="@color/text_grey"
+                    android:textSize="17.0sp"
+                    android:hint="性别"
+                    android:paddingRight="5dp"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/row_phone"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2.0dip"
+                android:layout_marginRight="2.0dip"
+                android:paddingBottom="16.0dip"
+                android:paddingTop="16.0dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:drawableLeft="@mipmap/infor_phone"
+                    android:drawablePadding="10.0dip"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="17.0dip"
+                    android:text="手机"
+                    android:textColor="@color/text_clo"
+                    android:textSize="20.0sp" />
+                <TextView
+                    android:id="@+id/infor_phone"
+                    android:layout_gravity="right|center_vertical"
+                    android:textColor="@color/text_grey"
+                    android:textSize="17.0sp"
+                    android:hint="手机"
+                    android:paddingRight="5dp"/>
+                <ImageButton
+                    android:id="@+id/infor_phone_forward"
+                    android:src="@mipmap/infor_forward"
+                    android:background="@color/White"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"/>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+
+
+</com.example.xmfy.yzubookshop.widget.CustomToolBar>

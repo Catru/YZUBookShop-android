@@ -8,16 +8,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.xmfy.yzubookshop.R;
-import com.example.xmfy.yzubookshop.module.login.LoginActivity;
+import com.example.xmfy.yzubookshop.module.user.LoginActivity;
+import com.example.xmfy.yzubookshop.module.user.UserInfoActivity;
 import com.example.xmfy.yzubookshop.utils.LoginUtils;
 
 /**
@@ -33,6 +35,10 @@ public class MineFragment extends Fragment implements View.OnClickListener{
     private LinearLayout ll_personal_infor;
     private LinearLayout ll_mycollection;
     private LinearLayout ll_receive_address;
+    private ImageView civ_headshot;
+
+    public MineFragment() {
+    }
 
     @Nullable
     @Override
@@ -53,6 +59,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
     private void initLoginInfor() {
         if(isLogined){
             String username = LoginUtils.getUsername(preference);
+            Glide.with(getActivity()).load(preference.getString("headshot","")).into(civ_headshot);
             tv_login_infor.setText("尊敬的"+username+", 您好!");
             tv_login.setText("注销");
             tv_login.setOnClickListener(new LogoutListener());
@@ -71,6 +78,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
         ll_personal_infor = view.findViewById(R.id.ll_personal_infor);
         ll_mycollection = view.findViewById(R.id.ll_mycollection);
         ll_receive_address = view.findViewById(R.id.ll_receive_address);
+        civ_headshot = view.findViewById(R.id.civ_headshot);
         ll_personal_infor.setOnClickListener(this);
         ll_mycollection.setOnClickListener(this);
         ll_receive_address.setOnClickListener(this);
@@ -84,7 +92,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
         }
         switch (view.getId()){
             case R.id.ll_personal_infor:
-                Toast.makeText(getContext(), "个人资料", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), UserInfoActivity.class));
                 break;
             case R.id.ll_mycollection:
                 break;
@@ -115,6 +123,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
                     LoginUtils.clearUser(getContext().getSharedPreferences("User", Context.MODE_PRIVATE));
                     isLogined = false;
                     initLoginInfor();
+                    civ_headshot.setImageResource(R.mipmap.ic_launcher);
                 }
             });
             builder.show();

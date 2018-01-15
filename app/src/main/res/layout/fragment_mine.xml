@@ -12,7 +12,7 @@
     <!-- TODO: Update blank fragment layout -->
     <widget.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/circleImageView"
+        android:id="@+id/civ_headshot"
         android:layout_marginTop="50dp"
         android:layout_width="100dp"
         android:layout_height="100dp"

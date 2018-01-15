@@ -30,8 +30,10 @@
         <activity
             android:name=".module.news.NewsActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".module.login.LoginActivity" />
-        <activity android:name=".module.login.RegisterActivity"></activity>
+        <activity android:name=".module.user.LoginActivity" />
+        <activity android:name=".module.user.RegisterActivity" />
+        <activity android:name=".module.user.UserInfoActivity" />
+        <activity android:name=".module.user.InforEditActivity"></activity>
     </application>
 
 </manifest>

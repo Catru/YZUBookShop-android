@@ -43,4 +43,8 @@ public class LoginUtils {
     public static String getUsername(SharedPreferences preferences){
         return preferences.getString("username", "");
     }
+
+    public static String getHeadshot(SharedPreferences preferences){
+        return preferences.getString("headshot", "");
+    }
 }

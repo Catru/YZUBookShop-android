@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.xmfy.yzubookshop.widget.CustomToolBar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:left_btn_src="@drawable/icon_back"
+    app:left_btn_visible="true"
+    app:title_text="信息修改"
+    app:title_visible="true"
+    app:right_tv_text="完成"
+    app:right_tv_visible="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/White">
+        <TextView
+            android:id="@+id/infor_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/text_grey_darker"
+            android:text="字段名:"
+            android:textSize="24sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="#FFF"
+            android:paddingLeft="1.0dip"
+            android:shrinkColumns="0"
+            android:stretchColumns="0">
+            <EditText
+                android:id="@+id/infor_edit_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_grey"
+                android:text="字段值"
+                android:textSize="18sp"
+                android:singleLine="true"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</com.example.xmfy.yzubookshop.widget.CustomToolBar>
