@@ -33,7 +33,8 @@
         <activity android:name=".module.user.LoginActivity" />
         <activity android:name=".module.user.RegisterActivity" />
         <activity android:name=".module.user.UserInfoActivity" />
-        <activity android:name=".module.user.InforEditActivity"></activity>
+        <activity android:name=".module.user.InforEditActivity" />
+        <activity android:name=".module.user.DeliveryActivity"></activity>
     </application>
 
 </manifest>

@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -165,6 +167,9 @@ public class NewsFragment extends Fragment {
             FormedData<List<News>> formedData = gson.fromJson(data, new TypeToken<FormedData<List<News>>>(){}.getType());
             mRecyclerView = view.findViewById(R.id.view_newslist);
             mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+            DividerItemDecoration divider = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+            divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.custom_rc_divider));
+            mRecyclerView.addItemDecoration(divider);
             mAdapter = new NewsAdapter(getActivity(), formedData.getData(), mRecyclerView);
             mRecyclerView.setLayoutManager(mLayoutManager);
             mRecyclerView.setAdapter(mAdapter);

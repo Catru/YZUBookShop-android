@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.xmfy.yzubookshop.model.Carousel;
 import com.example.xmfy.yzubookshop.model.FormedData;
+import com.example.xmfy.yzubookshop.utils.OKHttpUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -29,16 +30,7 @@ public class CustomedAsync extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(strings[0]).build();
-        Response response;
-        try{
-            response = client.newCall(request).execute();
-            return response.body().string();
-        }catch (IOException e){
-            Log.e("JsonUtils", "异步下载失败");
-            return null;
-        }
+        return OKHttpUtils.doGet(strings[0]);
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.xmfy.yzubookshop.global.AppConstants;
 import com.example.xmfy.yzubookshop.model.FormedData;
 import com.example.xmfy.yzubookshop.model.User;
+import com.example.xmfy.yzubookshop.utils.OKHttpUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -30,23 +31,11 @@ public class LoginAsyncTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        OkHttpClient client = new OkHttpClient();
         FormBody body = new FormBody.Builder()
                 .add("account", strings[0])
                 .add("pwd", strings[1])
                 .build();
-        Request request = new Request.Builder()
-                .url(AppConstants.LOGIN_ADDRESS)
-                .post(body)
-                .build();
-        Response response;
-        try {
-            response = client.newCall(request).execute();
-            return response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return OKHttpUtils.doPostWithParams(AppConstants.LOGIN_ADDRESS, body);
     }
 
     @Override

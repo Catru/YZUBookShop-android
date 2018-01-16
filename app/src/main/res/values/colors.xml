@@ -10,10 +10,13 @@
     <color name="PureWhite">#FFFFFF</color>
     <color name="Black">#000000</color>
     <color name="border_clo">#ccc</color>
-    <color name="text_clo">#333</color>
+    <color name="text_clo">#0D1D23</color>
     <color name="text_grey_darker">#4c4c4c</color>
-    <color name="text_grey">#BFBFBF</color>
+    <color name="text_grey">#959595</color>
     <color name="LightSkyBlue">#87CEFA</color>
     <color name="SpringGreen">#3CB371</color>
-    <color name="table_divider_color">#BFBFBF</color>
+    <color name="table_divider_color">#E6E6E6</color>
+    <color name="recyclerview_divider_color">#E6E6E6</color>
+    <color name="LakeBlue">#80CBC4</color>
+    <color name="DarkCyan">#008B8B</color>
 </resources>

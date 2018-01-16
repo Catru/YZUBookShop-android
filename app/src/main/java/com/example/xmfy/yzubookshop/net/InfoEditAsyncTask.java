@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.example.xmfy.yzubookshop.global.AppConstants;
 import com.example.xmfy.yzubookshop.model.FormedData;
+import com.example.xmfy.yzubookshop.utils.OKHttpUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,24 +28,12 @@ public class InfoEditAsyncTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        OkHttpClient client = new OkHttpClient();
         FormBody body = new FormBody.Builder()
                 .add("key", strings[0])
                 .add("value", strings[1])
                 .add("account", strings[2])
                 .build();
-        Request request = new Request.Builder()
-                .url(AppConstants.USER_UPDATE_ADDRESS)
-                .post(body)
-                .build();
-        Response response;
-        try {
-            response = client.newCall(request).execute();
-            return response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return OKHttpUtils.doPostWithParams(AppConstants.USER_UPDATE_ADDRESS, body);
     }
 
     @Override
