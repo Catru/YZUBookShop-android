@@ -1,6 +1,7 @@
 package com.example.xmfy.yzubookshop.net;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.xmfy.yzubookshop.global.AppConstants;
 import com.example.xmfy.yzubookshop.model.Delivery;
@@ -22,11 +23,12 @@ public class DeliveryAsyncTask extends AsyncTask<String, Void, String>{
     public static final int METHOD_SET_DEFAULT_LOCATION = 2;
     public static final int METHOD_UPDATE = 3;
     public static final int METHOD_DELETE = 4;
+    public static final int METHOD_ADD = 5;
 
-    private AsyncResponse<List<Delivery>> asyncResponse;
+    private AsyncResponse asyncResponse;
     private int type;
 
-    public void setAsyncResponse(int type, AsyncResponse<List<Delivery>> asyncResponse) {
+    public void setAsyncResponse(int type, AsyncResponse asyncResponse) {
         this.type = type;
         this.asyncResponse = asyncResponse;
     }
@@ -42,6 +44,36 @@ public class DeliveryAsyncTask extends AsyncTask<String, Void, String>{
                         .add("account", strings[1])
                         .build();
                 return OKHttpUtils.doPostWithParams(AppConstants.DELIVERY_SET_DEFAULT, body);
+            case METHOD_ADD:
+                FormBody body_add = new FormBody.Builder()
+                        .add("account", strings[0])
+                        .add("receiver", strings[1])
+                        .add("phone", strings[2])
+                        .add("province", strings[3])
+                        .add("city", strings[4])
+                        .add("district", strings[5])
+                        .add("location", strings[6])
+                        .add("defaults", strings[7])
+                        .build();
+                return OKHttpUtils.doPostWithParams(AppConstants.DELIVERY_ADD, body_add);
+            case METHOD_DELETE:
+                FormBody body_delete = new FormBody.Builder()
+                        .add("id", strings[0])
+                        .build();
+                return OKHttpUtils.doPostWithParams(AppConstants.DELIVERY_DELETE, body_delete);
+            case METHOD_UPDATE:
+                FormBody body_update = new FormBody.Builder()
+                        .add("id",strings[0])
+                        .add("account", strings[1])
+                        .add("receiver", strings[2])
+                        .add("phone", strings[3])
+                        .add("province", strings[4])
+                        .add("city", strings[5])
+                        .add("district", strings[6])
+                        .add("location", strings[7])
+                        .add("defaults", strings[8])
+                        .build();
+                return OKHttpUtils.doPostWithParams(AppConstants.DELIVERY_UPDATE, body_update);
         }
         return null;
     }
@@ -50,14 +82,8 @@ public class DeliveryAsyncTask extends AsyncTask<String, Void, String>{
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         Gson gson = new Gson();
-        FormedData data;
-        switch (type){
-            case METHOD_QUERY:
-            case METHOD_SET_DEFAULT_LOCATION:
-                data = gson.fromJson(s, new TypeToken<FormedData<List<Delivery>>>(){}.getType());
-                onResponse(data);
-                break;
-        }
+        FormedData data = gson.fromJson(s, new TypeToken<FormedData<List<Delivery>>>(){}.getType());
+        onResponse(data);
     }
 
     private void onResponse(FormedData data){

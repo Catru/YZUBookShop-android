@@ -3,8 +3,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    
-    <item type="id" name="delivery_id"/>
 
-    <item type="id" name="delivery_account"/>
+    <item name="delivery_id" type="id" />
+
+    <item name="delivery_account" type="id" />
+
+    <item name="delivery_item" type="id" />
+    <string name="title_activity_delivery_detail">DeliveryDetailActivity</string>
 </resources>

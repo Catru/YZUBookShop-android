@@ -22,12 +22,16 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.ViewHo
     private Context context;
     private List<Delivery> deliveryList;
     public List<RadioButton> radioButtonList;
+    public List<TextView> editTextList;
+    public List<TextView> deleteTextList;
     private LoadFinishedListener loadFinishedListener;
 
     public DeliveryAdapter(Context context, List<Delivery> deliveryList) {
         this.context = context;
         this.deliveryList = deliveryList;
         radioButtonList = new ArrayList<>();
+        editTextList = new ArrayList<>();
+        deleteTextList = new ArrayList<>();
     }
 
     public void setLoadFinishedListener(LoadFinishedListener loadFinishedListener) {
@@ -55,12 +59,17 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.ViewHo
         holder.rb_delivery_default.setChecked(d.getDefaults() == 1);
         holder.rb_delivery_default.setTag(R.id.delivery_id, d.getId());
         holder.rb_delivery_default.setTag(R.id.delivery_account, d.getAccount());
-        if (radioButtonList.size() < deliveryList.size())
+        if(!radioButtonList.contains(holder.rb_delivery_default))
             radioButtonList.add(holder.rb_delivery_default);
+        holder.tv_delivery_edit.setTag(R.id.delivery_item, d);
+        if (!editTextList.contains(holder.tv_delivery_edit))
+            editTextList.add(holder.tv_delivery_edit);
+        holder.tv_delivery_delete.setTag(R.id.delivery_id, d.getId());
+        if(!deleteTextList.contains(holder.tv_delivery_delete))
+            deleteTextList.add(holder.tv_delivery_delete);
         if (i == deliveryList.size()-1)
             loadFinishedListener.onLoadFinished();
     }
-
 
     @Override
     public int getItemCount() {

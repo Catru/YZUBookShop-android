@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.xmfy.yzubookshop">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -7,11 +8,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".global.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        tools:replace="android:theme">
         <activity
             android:name=".module.guide.SplashAcitivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -34,7 +37,8 @@
         <activity android:name=".module.user.RegisterActivity" />
         <activity android:name=".module.user.UserInfoActivity" />
         <activity android:name=".module.user.InforEditActivity" />
-        <activity android:name=".module.user.DeliveryActivity"></activity>
+        <activity android:name=".module.user.DeliveryActivity" />
+        <activity android:name=".module.user.DeliveryDetailActivity" />
     </application>
 
 </manifest>

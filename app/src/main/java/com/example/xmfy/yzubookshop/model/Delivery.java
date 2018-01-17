@@ -1,9 +1,11 @@
 package com.example.xmfy.yzubookshop.model;
 
+import java.io.Serializable;
+
 /**
  * Created by xmfy on 2018/1/16.
  */
-public class Delivery {
+public class Delivery{
 
     private int id;
     private String account;

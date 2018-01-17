@@ -74,7 +74,7 @@
     </style>
 
     <!-- 下圆角样式 -->
-    <style name="bottom_layout"  parent="base_layout">
+    <style name="bottom_layout" parent="base_layout">
         <item name="android:background">@drawable/bottom_layout_selector</item>
     </style>
 
@@ -82,5 +82,9 @@
     <style name="single_layout" parent="base_layout">
         <item name="android:background">@drawable/single_layout_selector</item>
     </style>
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

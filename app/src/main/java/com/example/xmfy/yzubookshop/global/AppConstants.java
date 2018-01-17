@@ -20,4 +20,10 @@ public class AppConstants {
     public static final String DELIVERY_ADDRESS = "http://192.168.1.100:8080/delivery/getDeliveries";
 
     public static final String DELIVERY_SET_DEFAULT = "http://192.168.1.100:8080/delivery/setDefaultLocation";
+
+    public static final String DELIVERY_ADD = "http://192.168.1.100:8080/delivery/add";
+
+    public static final String DELIVERY_DELETE = "http://192.168.1.100:8080/delivery/delete";
+
+    public static final String DELIVERY_UPDATE = "http://192.168.1.100:8080/delivery/update";
 }
