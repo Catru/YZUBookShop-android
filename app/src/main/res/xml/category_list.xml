@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<categoryList>
+    <c1 id = "1" name = "小说">
+        <c2 id = "11" name = "社会" />
+        <c2 id = "12" name = "侦探/悬疑/推理"/>
+        <c2 id = "13" name = "情感"/>
+        <c2 id = "14" name = "世界名著"/>
+        <c2 id = "15" name = "历史"/>
+    </c1>
+    <c1 id="2" name="文学">
+        <c2 id = "21" name = "中国现当代随笔"/>
+        <c2 id = "22" name = "名家作品"/>
+    </c1>
+</categoryList>

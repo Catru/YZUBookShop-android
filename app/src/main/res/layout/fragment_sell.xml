@@ -1,13 +1,14 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.example.xmfy.yzubookshop.widget.CustomToolBar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.xmfy.yzubookshop.fragments.SellFragment">
+    android:orientation="vertical"
+    app:left_btn_src="@mipmap/icon_selling_category"
+    app:left_btn_visible="true"
+    app:title_text="售书列表"
+    app:title_visible="true">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="sell" />
 
-</FrameLayout>
+
+</com.example.xmfy.yzubookshop.widget.CustomToolBar>
