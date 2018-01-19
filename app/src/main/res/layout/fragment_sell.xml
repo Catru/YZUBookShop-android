@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:left_btn_src="@mipmap/icon_selling_category"
-    app:left_btn_visible="true"
     app:title_text="售书列表"
     app:title_visible="true">
 
-
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/lv_selling"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/White"/>
 
 </com.example.xmfy.yzubookshop.widget.CustomToolBar>

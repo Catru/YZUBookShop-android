@@ -1,0 +1,32 @@
+<com.example.xmfy.yzubookshop.widget.CustomToolBar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:left_btn_src="@drawable/icon_back"
+    app:left_btn_visible="true"
+    app:title_text="书籍类目"
+    app:title_visible="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <ListView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:divider="@drawable/custom_rc_divider"
+            android:background="@color/White"/>
+        <ListView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/PureWhite"/>
+    </LinearLayout>
+
+
+
+
+</com.example.xmfy.yzubookshop.widget.CustomToolBar>

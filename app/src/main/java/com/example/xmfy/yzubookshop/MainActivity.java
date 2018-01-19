@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -21,7 +20,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener, ViewPager.OnPageChangeListener {
 
     private BottomNavigationBar bottomNavigationBar;
-    private ViewPager vp;
+    private CustomViewPager vp;
     private List<Fragment> fragments;
     int lastSelectedPosition = 0;
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
     private void initViewPager() {
-        vp = (ViewPager) findViewById(R.id.main_vp);
+        vp = (CustomViewPager) findViewById(R.id.main_vp);
         fragments = new ArrayList<>();
         fragments.add(new NewsFragment());
         fragments.add(new TopsFragment());
@@ -82,11 +81,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
     public void onPageSelected(int position) {
+        vp.setPosition(position);
         lastSelectedPosition = position;
         bottomNavigationBar.selectTab(position);
     }

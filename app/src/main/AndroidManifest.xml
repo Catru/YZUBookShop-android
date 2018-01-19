@@ -39,6 +39,7 @@
         <activity android:name=".module.user.InforEditActivity" />
         <activity android:name=".module.user.DeliveryActivity" />
         <activity android:name=".module.user.DeliveryDetailActivity" />
+        <activity android:name=".module.selling.CategoryActivity"></activity>
     </application>
 
 </manifest>

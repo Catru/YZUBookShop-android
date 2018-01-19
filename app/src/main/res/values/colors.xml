@@ -20,4 +20,8 @@
     <color name="recyclerview_divider_color">#E6E6E6</color>
     <color name="LakeBlue">#80CBC4</color>
     <color name="DarkCyan">#008B8B</color>
+    <color name="PriceColor">#ED3A56</color>
+
+    <color name="icon_selling_edit">#C9C9CE</color>
+    <color name="icon_selling_delete">#F93F25</color>
 </resources>
