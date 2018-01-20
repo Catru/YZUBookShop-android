@@ -9,5 +9,6 @@
     <item name="delivery_account" type="id" />
 
     <item name="delivery_item" type="id" />
+
     <string name="title_activity_delivery_detail">DeliveryDetailActivity</string>
 </resources>

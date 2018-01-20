@@ -1,12 +1,15 @@
 package com.example.xmfy.yzubookshop.module.selling;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.model.Selling;
 import com.example.xmfy.yzubookshop.widget.RichText;
@@ -19,10 +22,16 @@ import java.util.List;
 public class SellingAdapter extends BaseAdapter{
     private List<Selling> sList;
     private Context context;
+    private Boolean loadImg = false;
 
     public SellingAdapter(List<Selling> sList, Context context) {
         this.sList = sList;
         this.context = context;
+    }
+
+    public void updateImageview(){
+        loadImg = true;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -53,15 +62,17 @@ public class SellingAdapter extends BaseAdapter{
         Selling selling = sList.get(i);
         holder.title.setText(selling.getTitle());
         holder.author.setText(selling.getAuthor());
-        holder.price.setText("￥"+selling.getPrice());
+        holder.price.setText(String.format("￥%.2f", selling.getPrice()));
         holder.views.setText(selling.getViews()+"");
         holder.collects.setText(selling.getCollects()+"");
+        ((Activity)context).runOnUiThread(new ImgRunnable(context, selling.getPhotoUrl().split(" ")[0], holder.cover));
         return v;
     }
 
     class ViewHolder{
         private TextView title, author, price;
         private RichText views, collects;
+        private ImageView cover;
 
         public ViewHolder(View v) {
             title = v.findViewById(R.id.tv_selling_title);
@@ -69,6 +80,26 @@ public class SellingAdapter extends BaseAdapter{
             price = v.findViewById(R.id.tv_selling_price);
             views = v.findViewById(R.id.tv_selling_views);
             collects = v.findViewById(R.id.tv_selling_collects);
+            cover = v.findViewById(R.id.iv_selling_pic);
         }
     }
+
+    class ImgRunnable implements Runnable {
+        private Context context;
+        private String url;
+        private ImageView imageView;
+
+        public ImgRunnable(Context context, String url, ImageView imageView) {
+            this.context = context;
+            this.url = url;
+            this.imageView = imageView;
+        }
+
+        @Override
+        public void run() {
+            Glide.with(context).load(url).into(imageView);
+        }
+    }
+
+
 }

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".global.MyApp"
@@ -39,7 +40,16 @@
         <activity android:name=".module.user.InforEditActivity" />
         <activity android:name=".module.user.DeliveryActivity" />
         <activity android:name=".module.user.DeliveryDetailActivity" />
-        <activity android:name=".module.selling.CategoryActivity"></activity>
+        <activity android:name=".module.selling.CategoryActivity" />
+        <activity android:name=".module.selling.SellingEditActivity"/>
+
+        <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            />
+
+        <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
     </application>
 
 </manifest>

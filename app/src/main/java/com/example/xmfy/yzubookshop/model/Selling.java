@@ -11,6 +11,7 @@ public class Selling {
     private String title;
     private String author;
     private float price;
+    private String description;
     private String keywords;
     private String photoUrl;
     private int category1;
@@ -24,12 +25,13 @@ public class Selling {
     public Selling() {
     }
 
-    public Selling(int id, String account, String title, String author, float price, String keywords, String photoUrl, int category1, int category2, Date datetime, int onsell, String promotion, int views, int collects) {
+    public Selling(int id, String account, String title, String author, float price, String description, String keywords, String photoUrl, int category1, int category2, Date datetime, int onsell, String promotion, int views, int collects) {
         this.id = id;
         this.account = account;
         this.title = title;
         this.author = author;
         this.price = price;
+        this.description = description;
         this.keywords = keywords;
         this.photoUrl = photoUrl;
         this.category1 = category1;
@@ -79,6 +81,14 @@ public class Selling {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getKeywords() {
@@ -161,6 +171,7 @@ public class Selling {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", price=" + price +
+                ", description='" + description + '\'' +
                 ", keywords='" + keywords + '\'' +
                 ", photoUrl='" + photoUrl + '\'' +
                 ", category1=" + category1 +
