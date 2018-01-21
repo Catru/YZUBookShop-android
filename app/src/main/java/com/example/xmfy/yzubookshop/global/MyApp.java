@@ -4,8 +4,10 @@ import android.app.Application;
 import android.util.Log;
 
 import com.example.xmfy.yzubookshop.module.selling.bean.Category1;
+import com.example.xmfy.yzubookshop.module.selling.bean.Category2;
 import com.example.xmfy.yzubookshop.utils.CategoryLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +15,8 @@ import java.util.List;
  */
 public class MyApp extends Application {
 
-    public static List<Category1> categoryList;
+    public static List<Category1> cList1;
+    public static List<List<Category2>>  cList2;
 
     @Override
     public void onCreate() {
@@ -22,7 +25,10 @@ public class MyApp extends Application {
     }
 
     private void loadCategories() {
-        categoryList = CategoryLoader.loadCategories(this);
-        Log.e("Books", categoryList.toString());
+        cList1 = new ArrayList<>();
+        cList2 = new ArrayList<>();
+        CategoryLoader.loadCategories(this, cList1, cList2);
+        Log.e("options", cList1.toString());
+        Log.e("options", cList2.toString());
     }
 }

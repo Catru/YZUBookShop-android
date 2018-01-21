@@ -1,9 +1,11 @@
 package com.example.xmfy.yzubookshop.module.selling.bean;
 
+import com.bigkoo.pickerview.model.IPickerViewData;
+
 /**
  * Created by xmfy on 2018/1/18.
  */
-public class Category2 {
+public class Category2 implements IPickerViewData{
 
     private int id;
     private String name;
@@ -38,5 +40,10 @@ public class Category2 {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getPickerViewText() {
+        return name;
     }
 }

@@ -2,7 +2,6 @@ package com.example.xmfy.yzubookshop.utils;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
-import android.util.Log;
 
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.module.selling.bean.Category1;
@@ -18,21 +17,18 @@ import java.util.List;
  */
 public class CategoryLoader {
 
-    public static List<Category1> loadCategories(Context context){
-        List<Category1> list1 = null;
+    public static void loadCategories(Context context, List<Category1> cList1, List<List<Category2>> cList2){
         Category1 c1 = null;
-        List<Category2> list2 = null;
         Category2 c2 = null;
-
+        List<Category2> list2 = new ArrayList<>();
+        if (cList2 == null)
+            cList2 = new ArrayList<>();
         XmlResourceParser parser = context.getResources().getXml(R.xml.category_list);
         try{
             int event = parser.getEventType();
             while (event != XmlPullParser.END_DOCUMENT){
                 String tag = parser.getName();
                 switch (event){
-                    case XmlPullParser.START_DOCUMENT:
-                        list1 = new ArrayList<>();
-                        break;
                     case XmlPullParser.START_TAG:
                         if ("c1".equals(tag)){
                             list2 = new ArrayList<>();
@@ -45,8 +41,8 @@ public class CategoryLoader {
                         break;
                     case XmlPullParser.END_TAG:
                         if ("c1".equals(tag)){
-                            c1.setcList(list2);
-                            list1.add(c1);
+                            cList1.add(c1);
+                            cList2.add(list2);
                         }else if("c2".equals(tag)){
                             list2.add(c2);
                         }
@@ -57,6 +53,6 @@ public class CategoryLoader {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return list1;
     }
+
 }

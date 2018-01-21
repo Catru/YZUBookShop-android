@@ -24,6 +24,11 @@ public class SellingAdapter extends BaseAdapter{
     private Context context;
     private Boolean loadImg = false;
 
+    final static int TYPE_ADD = 1;
+    final static int TYPE_PHOTO = 2;
+
+    final static int MAX = 9;
+
     public SellingAdapter(List<Selling> sList, Context context) {
         this.sList = sList;
         this.context = context;

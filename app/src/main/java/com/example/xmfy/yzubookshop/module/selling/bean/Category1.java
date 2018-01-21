@@ -1,11 +1,13 @@
 package com.example.xmfy.yzubookshop.module.selling.bean;
 
+import com.bigkoo.pickerview.model.IPickerViewData;
+
 import java.util.List;
 
 /**
  * Created by xmfy on 2018/1/18.
  */
-public class Category1 {
+public class Category1 implements IPickerViewData{
     private int id;
     private String name;
     private List<Category2> cList;
@@ -35,20 +37,16 @@ public class Category1 {
         this.name = name;
     }
 
-    public List<Category2> getcList() {
-        return cList;
-    }
-
-    public void setcList(List<Category2> cList) {
-        this.cList = cList;
-    }
-
     @Override
     public String toString() {
         return "Category1{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", cList=" + cList +
                 '}';
+    }
+
+    @Override
+    public String getPickerViewText() {
+        return name;
     }
 }

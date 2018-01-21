@@ -1,31 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.xmfy.yzubookshop.widget.CustomToolBar
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:divider="@drawable/custom_rc_divider"
-    android:showDividers="middle|end"
-    app:left_btn_src="@drawable/icon_back"
-    app:left_btn_visible="true"
-    app:title_text="编辑书籍信息"
-    app:title_visible="true"
-    app:right_tv_text="保存"
-    app:right_tv_visible="true"
-    android:background="@color/PureWhite">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <com.example.xmfy.yzubookshop.widget.CustomToolBar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/PureWhite"
+        android:divider="@drawable/custom_rc_divider"
         android:orientation="vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:showDividers="middle|end"
+        app:left_btn_src="@drawable/icon_back"
+        app:left_btn_visible="true"
+        app:right_tv_text="保存"
+        app:right_tv_visible="true"
+        app:title_text="编辑书籍信息"
+        app:title_visible="true">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:text="书名(标题)"
+                android:textColor="@color/text_clo"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_selling_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:hint="请填写书名(20字以内)"
+                android:maxLines="2"
+                android:textColor="@color/editText_clo"
+                android:textColorHint="@color/editText_clo"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:text="作者"
+                android:textColor="@color/text_clo"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_selling_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:hint="请填写作者"
+                android:maxLines="2"
+                android:textColor="@color/editText_clo"
+                android:textColorHint="@color/editText_clo"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:text="价格"
+                android:textColor="@color/text_clo"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_selling_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:hint="0.00"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/editText_clo"
+                android:textColorHint="@color/editText_clo"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:text="关键词"
+                android:textColor="@color/text_clo"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_selling_keywords"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:hint="以空格隔开,不超4个"
+                android:maxLines="2"
+                android:textColor="@color/editText_clo"
+                android:textColorHint="@color/editText_clo"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:text="类别"
+                android:textColor="@color/text_clo"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_selling_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:hint="请选择"
+                android:textColor="@color/editText_clo"
+                android:textColorHint="@color/editText_clo"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_selling_description"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="请填写书籍介绍,不超过200字"
+            android:textColor="@color/editText_clo"
+            android:textColorHint="@color/editText_clo"
+            android:textSize="20sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rc_selling_photos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="(请添加书籍图片,最少3张,首页设为封面)"
+            android:textColor="@color/text_clo"
+            android:textSize="14sp" />
 
 
-
-
-
-</com.example.xmfy.yzubookshop.widget.CustomToolBar>
+    </com.example.xmfy.yzubookshop.widget.CustomToolBar>
+</ScrollView>

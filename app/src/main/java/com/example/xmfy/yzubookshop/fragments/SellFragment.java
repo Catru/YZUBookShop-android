@@ -1,9 +1,9 @@
 package com.example.xmfy.yzubookshop.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +15,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.model.Selling;
 import com.example.xmfy.yzubookshop.module.selling.SellingAdapter;
+import com.example.xmfy.yzubookshop.module.selling.SellingEditActivity;
 import com.example.xmfy.yzubookshop.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class SellFragment extends Fragment {
         lv_selling.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                Log.e("MenuItem", sList.get(position).toString());
+                startActivity(new Intent(getActivity(), SellingEditActivity.class));
                 return false;
             }
         });
