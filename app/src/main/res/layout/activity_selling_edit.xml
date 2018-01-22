@@ -127,10 +127,9 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
-                    android:layout_weight="1"
                     android:text="关键词"
                     android:textColor="@color/text_clo"
                     android:textSize="20sp" />
@@ -144,9 +143,9 @@
                         android:id="@+id/et_selling_keywords"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
                         android:hint="以空格隔开,不超4个"
-                        android:maxLines="2"
+                        android:maxLines="1"
                         android:textColor="@color/editText_clo"
                         android:textColorHint="@color/editText_clo"
                         android:textSize="20sp" />

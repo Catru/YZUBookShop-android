@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,13 +44,20 @@ public class SellFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_sell, container, false);
+        Log.e("result", "here");
         bindView();
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("result", "Resume");
         if (LoginUtils.isLogined(preferences)){
             loadData();
             loadContent();
             initClickEvents();
         }
-        return view;
     }
 
     private void bindView() {
@@ -95,13 +103,6 @@ public class SellFragment extends Fragment {
 
 
     private void loadData(){
-//        sList.add(new Selling(1, "18751103565", "解忧杂货店(此商品不参与榜单活动)","(日)东野圭吾", 27.30f, "这是一本书", "keywords", "http://192.168.1.100:8080/resources/selling/18751103565/cover1.jpg http://192.168.1.100:8080/resources/selling/18751103565/cover2.jpg",1,11,null,1,"promotion",132,132));
-//        sList.add(new Selling(2, "18751103565", "解忧杂货店(此商品不参与榜单活动)","(日)东野圭吾", 27.30f, "这是一本书", "keywords", "http://192.168.1.100:8080/resources/selling/18751103565/cover2.jpg",1,11,null,1,"promotion",132,132));
-//        sList.add(new Selling(3, "18751103565", "解忧杂货店(此商品不参与榜单活动)","(日)东野圭吾", 27.30f, "这是一本书","keywords", "http://192.168.1.100:8080/resources/selling/18751103565/cover3.jpg",1,12,null,1,"promotion",132,132));
-//        sList.add(new Selling(4, "18751103565", "解忧杂货店(此商品不参与榜单活动)","(日)东野圭吾", 27.30f, "这是一本书","keywords", "http://192.168.1.100:8080/resources/selling/18751103565/cover4.jpg",1,13,null,1,"promotion",132,132));
-//        sList.add(new Selling(5, "18751103565", "解忧杂货店(此商品不参与榜单活动)","(日)东野圭吾", 27.30f, "这是一本书","keywords", "http://192.168.1.100:8080/resources/selling/18751103565/cover1.jpg",1,14,null,1,"promotion",132,132));
-//        sList.add(new Selling(6, "18751103565", "解忧杂货店(此商品不参与榜单活动)","(日)东野圭吾", 27.30f, "这是一本书","keywords", "http://192.168.1.100:8080/resources/selling/18751103565/cover1.jpg",2,21,null,1,"promotion",132,132));
-//        sList.add(new Selling(7, "18751103565", "解忧杂货店(此商品不参与榜单活动)","(日)东野圭吾", 27.30f, "这是一本书","keywords", "http://192.168.1.100:8080/resources/selling/18751103565/cover1.jpg",2,22,null,1,"promotion",132,132));
         SellingAsyncTask<List<Selling>> task = new SellingAsyncTask<>();
         task.setType(SellingAsyncTask.METHOD_QUERY);
         task.setAsyncResponse(new AsyncResponse<List<Selling>>() {

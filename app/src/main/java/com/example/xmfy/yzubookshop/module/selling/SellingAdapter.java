@@ -2,7 +2,6 @@ package com.example.xmfy.yzubookshop.module.selling;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +63,6 @@ public class SellingAdapter extends BaseAdapter{
         }else {
             holder = (ViewHolder) v.getTag();
         }
-        Log.e("result", sList.toString());
         Selling selling = sList.get(i);
         holder.title.setText(selling.getTitle());
         holder.author.setText(selling.getAuthor());

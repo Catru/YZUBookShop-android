@@ -29,7 +29,7 @@ public class AppConstants {
 
     public static final String SELLING_QUERY = "http://192.168.0.100:8080/selling/query";
 
-    public static final String SELLING_UPDATE = "http://192.168.1.100:8080/selling/update";
+    public static final String SELLING_UPDATE = "http://192.168.0.100:8080/selling/update";
 
     public static final String SELLING_DELETE = "http://192.168.1.100:8080/selling/delete";
 
