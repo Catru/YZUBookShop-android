@@ -10,6 +10,7 @@ import com.example.xmfy.yzubookshop.module.selling.bean.Category2;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,7 +18,10 @@ import java.util.List;
  */
 public class CategoryLoader {
 
-    public static void loadCategories(Context context, List<Category1> cList1, List<List<Category2>> cList2){
+    public static List<Category1> cList1 = new ArrayList<>();
+    public static List<List<Category2>> cList2 = new ArrayList<>();
+
+    public static void loadCategories(Context context){
         Category1 c1 = null;
         Category2 c2 = null;
         List<Category2> list2 = new ArrayList<>();
@@ -53,6 +57,46 @@ public class CategoryLoader {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static HashMap<String, Integer> getCategoryIdByName(String cname1, String cname2){
+        HashMap<String, Integer> result = new HashMap<>();
+        int position = 0;
+        for(int i = 0; i<cList1.size(); i++){
+            if (cList1.get(i).getName().equals(cname1)){
+                result.put("cid1", cList1.get(i).getId());
+                position = i;
+                break;
+            }
+        }
+        List<Category2> list = cList2.get(position);
+        for (Category2 c2 : list){
+            if (c2.getName().equals(cname2)){
+                result.put("cid2", c2.getId());
+                break;
+            }
+        }
+        return result;
+    }
+
+    public static HashMap<Integer, String> getCategoryNameById(int cid1, int cid2){
+        HashMap<Integer, String> result = new HashMap<>();
+        int position = 0;
+        for (int i = 0; i<cList1.size(); i++){
+            if (cList1.get(i).getId() == cid1){
+                result.put(1, cList1.get(i).getName());
+                position = i;
+                break;
+            }
+        }
+        List<Category2> list = cList2.get(position);
+        for(Category2 c2 : list){
+            if (c2.getId() == cid2){
+                result.put(2, c2.getName());
+                break;
+            }
+        }
+        return result;
     }
 
 }

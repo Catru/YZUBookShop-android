@@ -2,6 +2,7 @@ package com.example.xmfy.yzubookshop.module.selling;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import java.util.List;
 public class SellingAdapter extends BaseAdapter{
     private List<Selling> sList;
     private Context context;
-    private Boolean loadImg = false;
 
     final static int TYPE_ADD = 1;
     final static int TYPE_PHOTO = 2;
@@ -34,8 +34,8 @@ public class SellingAdapter extends BaseAdapter{
         this.context = context;
     }
 
-    public void updateImageview(){
-        loadImg = true;
+    public void update(List<Selling> list){
+        sList = list;
         notifyDataSetChanged();
     }
 
@@ -64,6 +64,7 @@ public class SellingAdapter extends BaseAdapter{
         }else {
             holder = (ViewHolder) v.getTag();
         }
+        Log.e("result", sList.toString());
         Selling selling = sList.get(i);
         holder.title.setText(selling.getTitle());
         holder.author.setText(selling.getAuthor());

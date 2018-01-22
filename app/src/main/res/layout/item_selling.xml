@@ -33,7 +33,7 @@
             android:textColor="@color/text_clo"
             android:textSize="18sp"
             android:textColorHint="@color/text_clo"
-            android:hint="解忧杂货店(此商品不参与榜单活动)"
+            android:hint="解忧杂货店"
             android:maxLines="2"/>
 
         <TextView

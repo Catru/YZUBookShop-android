@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     @Override
     public void onTabReselected(int position) {
-
     }
 
     @Override
