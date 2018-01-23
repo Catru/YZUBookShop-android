@@ -1,16 +1,19 @@
 package com.example.xmfy.yzubookshop.utils;
 
-import android.util.Log;
-
 import com.example.xmfy.yzubookshop.global.AppConstants;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -95,4 +98,27 @@ public class OKHttpUtils {
             return null;
         }
     }
+
+    public static String upLoadFiles(String account, List<File> fileList){
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpg");
+        builder.addFormDataPart("account", account);
+        for (File file : fileList)
+            builder.addFormDataPart("img", file.getName(), RequestBody.create(MEDIA_TYPE_JPG, file));
+        MultipartBody requestBody = builder.build();
+        Request request = new Request.Builder()
+                .url(AppConstants.SELLING_UPLOADPHOTOS)
+                .post(requestBody)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Response response;
+        try {
+            response = client.newCall(request).execute();
+            return response.body().string();
+        }catch (IOException e){
+            return null;
+        }
+    }
+
+
 }

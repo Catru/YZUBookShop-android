@@ -1,6 +1,7 @@
 package com.example.xmfy.yzubookshop.net;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.xmfy.yzubookshop.global.AppConstants;
 import com.example.xmfy.yzubookshop.model.FormedData;
@@ -9,6 +10,8 @@ import com.example.xmfy.yzubookshop.utils.OKHttpUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.FormBody;
@@ -22,6 +25,7 @@ public class SellingAsyncTask<T> extends AsyncTask<String, Void, String> {
     public static final int METHOD_UPDATE = 2;
     public static final int METHOD_DELETE = 3;
     public static final int METHOD_ADD = 4;
+    public static final int METHOD_UPLOAD_PHOTOS = 5;
 
     private int type;
     private AsyncResponse<T> asyncResponse;
@@ -50,8 +54,14 @@ public class SellingAsyncTask<T> extends AsyncTask<String, Void, String> {
                         .add("category1", strings[6])
                         .add("category2", strings[7])
                         .add("description", strings[8])
+                        .add("photoUrl", strings[9])
                         .build();
                 return OKHttpUtils.doPostWithParams(AppConstants.SELLING_UPDATE, body);
+            case METHOD_UPLOAD_PHOTOS:
+                List<File> files = new ArrayList<>();
+                for (int i =1;i<strings.length;i++)
+                    files.add(new File(strings[i]));
+                return OKHttpUtils.upLoadFiles(strings[0], files);
         }
         return null;
     }
@@ -67,6 +77,12 @@ public class SellingAsyncTask<T> extends AsyncTask<String, Void, String> {
                 onResponse(data);
                 break;
             case METHOD_UPDATE:
+                Log.e("selling", s);
+                data = gson.fromJson(s, new TypeToken<FormedData<Integer>>() {}.getType());
+                onResponse(data);
+                break;
+            case METHOD_UPLOAD_PHOTOS:
+                Log.e("photo", s);
                 data = gson.fromJson(s, new TypeToken<FormedData<Integer>>() {}.getType());
                 onResponse(data);
                 break;

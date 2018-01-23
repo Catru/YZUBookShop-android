@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.example.xmfy.yzubookshop.R;
+import com.example.xmfy.yzubookshop.global.AppConstants;
 import com.example.xmfy.yzubookshop.model.FormedData;
 import com.example.xmfy.yzubookshop.model.Selling;
 import com.example.xmfy.yzubookshop.module.selling.bean.Category1;
@@ -47,6 +48,7 @@ public class SellingEditActivity extends AppCompatActivity {
     private TextView tv_selling_category;
 
     private ArrayList<String> selectedPhotos;
+    private ArrayList<String> originalPhotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,12 @@ public class SellingEditActivity extends AppCompatActivity {
         photoAdapter = new PhotoAdapter(this, selectedPhotos);
         rc_selling_photos.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
         rc_selling_photos.setAdapter(photoAdapter);
+
+        //复制一份图片地址,检查用
+        originalPhotos = new ArrayList<>();
+        for (String url : selectedPhotos){
+            originalPhotos.add(url);
+        }
     }
 
     private void initClickEvents() {
@@ -115,13 +123,22 @@ public class SellingEditActivity extends AppCompatActivity {
             }
         });
 
+        //保存按钮
         tv_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (checkAndUpdateSelling()) {
-                    updateSelling();
+                    if (needUploadPhoto())
+                        updateSellingPhoto();
+                    else {
+                        StringBuilder builder = new StringBuilder();
+                        for(String url : selectedPhotos.toArray(new String[selectedPhotos.size()])){
+                            builder.append(url + " ");
+                        }
+                        bindSelling.setPhotoUrl(builder.toString());
+                        updateSelling();
+                    }
                 }
-                Log.e("photos", selectedPhotos.toString());
             }
         });
 
@@ -216,20 +233,22 @@ public class SellingEditActivity extends AppCompatActivity {
         bindSelling.setDescription(str);
         if (selectedPhotos.size() < 3) {
             Toast.makeText(this, "图片不能少于3张!", Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
     }
 
+    //上传图片成功后更新photoUrl, 最后更新整条记录
     private void updateSelling() {
         SellingAsyncTask<List<Selling>> task = new SellingAsyncTask<>();
         task.setType(SellingAsyncTask.METHOD_UPDATE);
         task.setAsyncResponse(new AsyncResponse<List<Selling>>() {
             @Override
             public void onDataReceivedSuccess(FormedData<List<Selling>> formedData) {
-                if (formedData.isSuccess()){
+                if (formedData.isSuccess()) {
                     Toast.makeText(SellingEditActivity.this, "更新成功!", Toast.LENGTH_SHORT).show();
                     SellingEditActivity.this.finish();
-                }else {
+                } else {
                     Toast.makeText(SellingEditActivity.this, formedData.getError(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -239,7 +258,61 @@ public class SellingEditActivity extends AppCompatActivity {
                 Toast.makeText(SellingEditActivity.this, "更新失败!请稍后再试", Toast.LENGTH_SHORT).show();
             }
         });
-        task.execute(bindSelling.getId()+"",bindSelling.getAccount(), bindSelling.getTitle(), bindSelling.getAuthor(), bindSelling.getPrice() + "",bindSelling.getKeywords(), bindSelling.getCategory1() + "", bindSelling.getCategory2() + "", bindSelling.getDescription());
+        task.execute(bindSelling.getId() + "", bindSelling.getAccount(), bindSelling.getTitle(), bindSelling.getAuthor(), bindSelling.getPrice() + "", bindSelling.getKeywords(), bindSelling.getCategory1() + "", bindSelling.getCategory2() + "", bindSelling.getDescription(), bindSelling.getPhotoUrl());
     }
 
+    //上传图片
+    private void updateSellingPhoto() {
+        List<String> sList = new ArrayList<>();
+        sList.add(bindSelling.getAccount());
+        for (String photoUrl : selectedPhotos) {
+            if (!photoUrl.startsWith("http")) {
+                sList.add(photoUrl);
+            }
+        }
+        String[] photoArray = sList.toArray(new String[sList.size()]);
+        SellingAsyncTask<Integer> task = new SellingAsyncTask<>();
+        task.setType(SellingAsyncTask.METHOD_UPLOAD_PHOTOS);
+        task.setAsyncResponse(new AsyncResponse<Integer>() {
+            @Override
+            public void onDataReceivedSuccess(FormedData<Integer> formedData) {
+                if (formedData.isSuccess()) {
+                    Toast.makeText(SellingEditActivity.this, "上传图片成功!", Toast.LENGTH_SHORT).show();
+                    //修改photoUrl
+                    updatePhotoUrl();
+                    updateSelling();
+                } else {
+                    Toast.makeText(SellingEditActivity.this, formedData.getError(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onDataReceivedFailed() {
+                Toast.makeText(SellingEditActivity.this, "上传图片失败!请稍后再试", Toast.LENGTH_SHORT).show();
+            }
+        });
+        task.execute(photoArray);
+    }
+
+    //更新图片地址
+    private void updatePhotoUrl(){
+        StringBuilder builder = new StringBuilder();
+        for (String url : selectedPhotos){
+            if (!url.startsWith("http")){
+                String newUrl = AppConstants.SELLING_PHOTO_LOCATION + bindSelling.getAccount() + "/" + url.substring(url.lastIndexOf("/")) + " ";
+                builder.append(newUrl);
+            } else
+                builder.append(url + " ");
+        }
+        Log.e("photo", builder.toString());
+        bindSelling.setPhotoUrl(builder.toString());
+    }
+
+    private boolean needUploadPhoto(){
+        for (String url : selectedPhotos){
+            if (!url.startsWith("http"))
+                return true;
+        }
+        return false;
+    }
 }
