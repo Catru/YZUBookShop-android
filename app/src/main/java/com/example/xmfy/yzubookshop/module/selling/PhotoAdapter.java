@@ -29,7 +29,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     final static int TYPE_ADD = 1;
     final static int TYPE_PHOTO = 2;
-    boolean isInited = false;
 
     final static int MAX = 9;
 
@@ -37,12 +36,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         this.photoPaths = photoPaths;
         this.mContext = mContext;
         inflater = LayoutInflater.from(mContext);
-    }
-
-    public void initPhotos(ArrayList<String> photos){
-        photoPaths = photos;
-        notifyDataSetChanged();
-        isInited = true;
     }
 
     @Override

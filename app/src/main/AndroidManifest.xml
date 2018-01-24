@@ -41,15 +41,14 @@
         <activity android:name=".module.user.DeliveryActivity" />
         <activity android:name=".module.user.DeliveryDetailActivity" />
         <activity android:name=".module.selling.CategoryActivity" />
-        <activity android:name=".module.selling.SellingEditActivity"/>
-
-        <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            />
-
-        <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-
+        <activity android:name=".module.selling.SellingEditActivity" />
+        <activity
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".module.selling.SellingAddActivity"></activity>
     </application>
 
 </manifest>

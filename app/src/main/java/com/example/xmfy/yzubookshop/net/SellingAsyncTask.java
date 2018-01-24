@@ -1,7 +1,6 @@
 package com.example.xmfy.yzubookshop.net;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.example.xmfy.yzubookshop.global.AppConstants;
 import com.example.xmfy.yzubookshop.model.FormedData;
@@ -62,6 +61,13 @@ public class SellingAsyncTask<T> extends AsyncTask<String, Void, String> {
                 for (int i =1;i<strings.length;i++)
                     files.add(new File(strings[i]));
                 return OKHttpUtils.upLoadFiles(strings[0], files);
+            case METHOD_ADD:
+                List<File> newSellingPhotos = new ArrayList<>();
+                for (int i = 9; i < strings.length ;i++)
+                    newSellingPhotos.add(new File(strings[i]));
+                return OKHttpUtils.postNewSelling(newSellingPhotos, strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6], strings[7], strings[8]);
+            case METHOD_DELETE:
+                return OKHttpUtils.doPostWithParams(AppConstants.SELLING_DELETE, new FormBody.Builder().add("id", strings[0]).build());
         }
         return null;
     }
@@ -77,12 +83,18 @@ public class SellingAsyncTask<T> extends AsyncTask<String, Void, String> {
                 onResponse(data);
                 break;
             case METHOD_UPDATE:
-                Log.e("selling", s);
                 data = gson.fromJson(s, new TypeToken<FormedData<Integer>>() {}.getType());
                 onResponse(data);
                 break;
             case METHOD_UPLOAD_PHOTOS:
-                Log.e("photo", s);
+                data = gson.fromJson(s, new TypeToken<FormedData<Integer>>() {}.getType());
+                onResponse(data);
+                break;
+            case METHOD_ADD:
+                data = gson.fromJson(s, new TypeToken<FormedData<Integer>>() {}.getType());
+                onResponse(data);
+                break;
+            case METHOD_DELETE:
                 data = gson.fromJson(s, new TypeToken<FormedData<Integer>>() {}.getType());
                 onResponse(data);
                 break;

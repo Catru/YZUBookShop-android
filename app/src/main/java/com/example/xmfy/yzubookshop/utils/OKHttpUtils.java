@@ -120,5 +120,34 @@ public class OKHttpUtils {
         }
     }
 
+    public static String postNewSelling(List<File> fileList, String... strs){
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpg");
+        for (File file : fileList)
+            builder.addFormDataPart("img", file.getName(), RequestBody.create(MEDIA_TYPE_JPG, file));
+        builder.addFormDataPart("account", strs[0])
+                .addFormDataPart("title", strs[1])
+                .addFormDataPart("author", strs[2])
+                .addFormDataPart("price", strs[3])
+                .addFormDataPart("keywords", strs[4])
+                .addFormDataPart("category1", strs[5])
+                .addFormDataPart("category2", strs[6])
+                .addFormDataPart("description", strs[7])
+                .addFormDataPart("photoUrl", strs[8]);
+        MultipartBody requestBody = builder.build();
+        Request request = new Request.Builder()
+                .url(AppConstants.SELLING_ADD)
+                .post(requestBody)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Response response;
+        try {
+            response = client.newCall(request).execute();
+            return response.body().string();
+        }catch (IOException e){
+            return null;
+        }
+    }
+
 
 }

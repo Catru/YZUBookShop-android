@@ -1,15 +1,18 @@
 package com.example.xmfy.yzubookshop.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -20,6 +23,7 @@ import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.model.FormedData;
 import com.example.xmfy.yzubookshop.model.Selling;
 import com.example.xmfy.yzubookshop.module.selling.SellingAdapter;
+import com.example.xmfy.yzubookshop.module.selling.SellingAddActivity;
 import com.example.xmfy.yzubookshop.module.selling.SellingEditActivity;
 import com.example.xmfy.yzubookshop.net.AsyncResponse;
 import com.example.xmfy.yzubookshop.net.SellingAsyncTask;
@@ -39,6 +43,7 @@ public class SellFragment extends Fragment {
     private List<Selling> sList;
     private SellingAdapter adapter;
     private SharedPreferences preferences;
+    private TextView tv_add;
 
     @Nullable
     @Override
@@ -62,6 +67,7 @@ public class SellFragment extends Fragment {
 
     private void bindView() {
         lv_selling = view.findViewById(R.id.lv_selling);
+        tv_add = view.findViewById(R.id.toolbar_right_tv);
         sList = new ArrayList<>();
         preferences = getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
     }
@@ -93,10 +99,25 @@ public class SellFragment extends Fragment {
         lv_selling.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                Intent intent = new Intent(getActivity(), SellingEditActivity.class);
-                intent.putExtra("selling", new Gson().toJson(sList.get(position)));
-                startActivity(intent);
+                if (index == 0){
+                    Intent intent = new Intent(getActivity(), SellingEditActivity.class);
+                    intent.putExtra("selling", new Gson().toJson(sList.get(position)));
+                    startActivity(intent);
+                }else if (index ==1){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("删除书本");
+                    builder.setMessage("您确定要删除这本书籍吗? 删除后记录不可恢复!");
+                    builder.setPositiveButton("确定", new deleteClickListener(position));
+                    builder.show();
+                }
                 return false;
+            }
+        });
+
+        tv_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SellingAddActivity.class));
             }
         });
     }
@@ -122,5 +143,35 @@ public class SellFragment extends Fragment {
             }
         });
         task.execute(LoginUtils.getAccount(preferences));
+    }
+
+    private class deleteClickListener implements DialogInterface.OnClickListener {
+        private int position;
+
+        public deleteClickListener(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            SellingAsyncTask<Integer> task = new SellingAsyncTask<>();
+            task.setType(SellingAsyncTask.METHOD_DELETE);
+            task.setAsyncResponse(new AsyncResponse<Integer>() {
+                @Override
+                public void onDataReceivedSuccess(FormedData<Integer> formedData) {
+                    if (formedData.isSuccess()){
+                        Toast.makeText(getContext(), "删除成功", Toast.LENGTH_SHORT).show();
+                        onResume();
+                    }else
+                        Toast.makeText(getContext(), formedData.getError(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onDataReceivedFailed() {
+                    Toast.makeText(getContext(), "网络繁忙, 请检查相关设置", Toast.LENGTH_SHORT).show();
+                }
+            });
+            task.execute(sList.get(position).getId()+"");
+        }
     }
 }
