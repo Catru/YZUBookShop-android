@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="actionBarSize">32dip</dimen>
+    <dimen name="search_view_inset">5dip</dimen>
 </resources>

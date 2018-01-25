@@ -27,7 +27,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".module.guide.WelcomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -48,7 +49,7 @@
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".module.selling.SellingAddActivity"></activity>
+        <activity android:name=".module.selling.SellingAddActivity"/>
     </application>
 
 </manifest>
