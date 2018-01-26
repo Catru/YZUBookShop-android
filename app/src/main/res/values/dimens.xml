@@ -5,4 +5,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="actionBarSize">32dip</dimen>
     <dimen name="search_view_inset">5dip</dimen>
+    <dimen name="sliding_search_view_header_height">250dp</dimen>
 </resources>

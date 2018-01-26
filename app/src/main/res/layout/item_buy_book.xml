@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/PureWhite">
+
+
+    <ImageView
+        android:id="@+id/iv_buy_pic"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/icon_book_sample"/>
+    
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <TextView
+            android:id="@+id/tv_buy_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_clo"
+            android:textSize="18sp"
+            android:textColorHint="@color/text_clo"
+            android:hint="解忧杂货店"
+            android:maxLines="2"/>
+
+        <TextView
+            android:id="@+id/tv_buy_author"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/editText_clo"
+            android:textSize="16sp"
+            android:textColorHint="@color/editText_clo"
+            android:hint="(日)东野圭吾"/>
+
+        <TextView
+            android:id="@+id/tv_buy_price"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/PriceColor"
+            android:textSize="16sp"
+            android:textColorHint="@color/PriceColor"
+            android:hint="￥27.30"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.example.xmfy.yzubookshop.widget.RichText
+                android:id="@+id/rt_buy_views"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="0"
+                android:gravity="center_vertical"
+                app:drawable_src="@mipmap/icon_view"
+                app:drawable_location="left"
+                app:drawable_height="25dp"
+                app:drawable_width="25dp"
+                android:drawablePadding="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/editText_clo"
+                android:textColorHint="@color/editText_clo"
+                android:hint="132"
+                />
+            <com.example.xmfy.yzubookshop.widget.RichText
+                android:id="@+id/rt_buy_collects"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:paddingLeft="35dp"
+                android:gravity="left|center_vertical"
+                app:drawable_src="@mipmap/icon_collect"
+                app:drawable_location="left"
+                app:drawable_height="20dp"
+                app:drawable_width="20dp"
+                android:drawablePadding="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/editText_clo"
+                android:textColorHint="@color/editText_clo"
+                android:hint="132"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

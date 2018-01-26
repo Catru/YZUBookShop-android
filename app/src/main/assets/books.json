@@ -1,0 +1,60 @@
+//private int id;
+//private String account;
+//private String title;
+//private String author;
+//private float price;
+//private String photoUrl;
+//private int category1;
+//private int category2;
+//private int views;
+//private int collects;
+[
+  {
+    "id": 1,
+    "account": "18751103565",
+    "title": "解忧杂货铺1",
+    "author": "日下村树",
+    "price": 123,
+    "photoUrl": "xxx",
+    "category1": 1,
+    "category2": 11,
+    "views": 12,
+    "collects": 10
+  },
+  {
+    "id": 2,
+    "account": "18751103565",
+    "title": "解忧杂货铺2",
+    "author": "日下村树",
+    "price": 123,
+    "photoUrl": "xxx",
+    "category1": 1,
+    "category2": 11,
+    "views": 12,
+    "collects": 10
+  },
+  {
+    "id": 3,
+    "account": "18751103565",
+    "title": "解忧杂货铺3",
+    "author": "日下村树",
+    "price": 123,
+    "photoUrl": "xxx",
+    "category1": 1,
+    "category2": 11,
+    "views": 12,
+    "collects": 10
+  },
+  {
+    "id": 4,
+    "account": "18751103565",
+    "title": "解忧杂货铺4",
+    "author": "日下村树",
+    "price": 123,
+    "photoUrl": "xxx",
+    "category1": 1,
+    "category2": 11,
+    "views": 12,
+    "collects": 10
+  }
+]
