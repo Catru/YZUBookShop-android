@@ -9,11 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.model.Book;
@@ -29,8 +26,12 @@ import java.util.List;
  */
 public class BuyFragment extends BaseBuyFragment {
 
-    private static final long ANIM_DURATION = 350;
-    public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
+    public static final long FIND_SUGGESTION_SIMULATED_DELAY = 350;
+
+    private static final int SEARCH_SIZE = 5;
+
+    private int c1 = 0;
+    private int c2 = 0;
 
     private FloatingSearchView mSearchView;
     private RecyclerView mSearchResultsList;
@@ -65,7 +66,7 @@ public class BuyFragment extends BaseBuyFragment {
                     mSearchView.clearSuggestions();
                 }else {
                     mSearchView.showProgress();
-                    BookSearchHelper.findSuggestions(getActivity(), newQuery, 5,
+                    BookSearchHelper.findSuggestions(getActivity(), newQuery, SEARCH_SIZE, c1, c2,
                             FIND_SUGGESTION_SIMULATED_DELAY, new BookSearchHelper.OnFindSuggestionsListener() {
                                 @Override
                                 public void onResults(List<BookSuggestion> results) {
@@ -82,11 +83,10 @@ public class BuyFragment extends BaseBuyFragment {
             public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
 
                 BookSuggestion bookSuggestion = (BookSuggestion) searchSuggestion;
-                BookSearchHelper.findBooks(getActivity(), bookSuggestion.getBody(),
+                BookSearchHelper.findBooks(getActivity(), bookSuggestion.getType(), bookSuggestion.getBody(),
                         new BookSearchHelper.OnFindColorsListener() {
                             @Override
                             public void onResults(List<Book> results) {
-                                Log.e("fragment", results.toString());
                                 mSearchResultsAdapter.swapData(results);
                             }
                         });
@@ -96,7 +96,7 @@ public class BuyFragment extends BaseBuyFragment {
             @Override
             public void onSearchAction(String query) {
                 mLastQuery = query;
-                BookSearchHelper.findBooks(getActivity(), query,
+                BookSearchHelper.findBooks(getActivity(), "", query,
                         new BookSearchHelper.OnFindColorsListener() {
                             @Override
                             public void onResults(List<Book> results) {
@@ -122,15 +122,18 @@ public class BuyFragment extends BaseBuyFragment {
             @Override
             public void onActionMenuItemSelected(MenuItem item) {
                 if (item.getItemId() == R.id.action_search){
-                    Log.e("fragment", "action search");
+                    String query = mSearchView.getQuery();
+                    if (!query.equals(mLastQuery)){
+                        BookSearchHelper.findBooks(getActivity(), "", query,
+                                new BookSearchHelper.OnFindColorsListener() {
+                                    @Override
+                                    public void onResults(List<Book> results) {
+                                        mSearchResultsAdapter.swapData(results);
+                                    }
+                                });
+                        mLastQuery = query;
+                    }
                 }
-            }
-        });
-
-        mSearchView.setOnBindSuggestionCallback(new SearchSuggestionsAdapter.OnBindSuggestionCallback() {
-            @Override
-            public void onBindSuggestion(View suggestionView, ImageView leftIcon, TextView textView, SearchSuggestion item, int itemPosition) {
-                Log.e("fragment", "onBindSuggestion");
             }
         });
 
@@ -141,21 +144,18 @@ public class BuyFragment extends BaseBuyFragment {
             }
         });
 
-        mSearchView.setOnClearSearchActionListener(new FloatingSearchView.OnClearSearchActionListener() {
-            @Override
-            public void onClearSearchClicked() {
-
-                Log.d("fragment", "onClearSearchClicked()");
-            }
-        });
-
-
     }
 
     private void setupResultsList() {
-        mSearchResultsAdapter = new SearchResultsListAdapter();
+        mSearchResultsAdapter = new SearchResultsListAdapter(getContext());
         mSearchResultsList.setAdapter(mSearchResultsAdapter);
         mSearchResultsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        mSearchResultsAdapter.setItemsOnClickListener(new SearchResultsListAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(Book book) {
+                Log.e("buy", book.toString());
+            }
+        });
     }
 
     @Override

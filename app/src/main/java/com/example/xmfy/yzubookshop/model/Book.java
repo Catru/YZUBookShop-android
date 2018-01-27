@@ -1,44 +1,28 @@
 package com.example.xmfy.yzubookshop.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by xmfy on 2018/1/26.
  */
-public class Book implements Parcelable {
-    @SerializedName("id")
-    @Expose
+public class Book{
+
     private int id;
-    @SerializedName("account")
-    @Expose
+
     private String account;
-    @SerializedName("title")
-    @Expose
+
     private String title;
-    @SerializedName("author")
-    @Expose
+
     private String author;
-    @SerializedName("price")
-    @Expose
+
     private float price;
-    @SerializedName("photoUrl")
-    @Expose
+
     private String photoUrl;
-    @SerializedName("category1")
-    @Expose
+
     private int category1;
-    @SerializedName("category2")
-    @Expose
+
     private int category2;
-    @SerializedName("views")
-    @Expose
+
     private int views;
-    @SerializedName("collects")
-    @Expose
+
     private int collects;
 
     public Book() {
@@ -55,19 +39,6 @@ public class Book implements Parcelable {
         this.category2 = category2;
         this.views = views;
         this.collects = collects;
-    }
-
-    public Book(Parcel parcel){
-        id = parcel.readInt();
-        account = parcel.readString();
-        title = parcel.readString();
-        author = parcel.readString();
-        price = parcel.readFloat();
-        photoUrl = parcel.readString();
-        category1 = parcel.readInt();
-        category2 = parcel.readInt();
-        views = parcel.readInt();
-        collects = parcel.readInt();
     }
 
     public int getId() {
@@ -166,35 +137,5 @@ public class Book implements Parcelable {
                 '}';
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(account);
-        parcel.writeString(title);
-        parcel.writeString(author);
-        parcel.writeFloat(price);
-        parcel.writeString(photoUrl);
-        parcel.writeInt(category1);
-        parcel.writeInt(category2);
-        parcel.writeInt(views);
-        parcel.writeInt(collects);
-    }
-
-    public static final Creator<Book> CREATOR = new Creator<Book>(){
-
-        @Override
-        public Book createFromParcel(Parcel parcel) {
-            return new Book(parcel);
-        }
-
-        @Override
-        public Book[] newArray(int size) {
-            return new Book[size];
-        }
-    };
 }

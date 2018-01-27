@@ -1,6 +1,7 @@
 package com.example.xmfy.yzubookshop.module.buy;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arlib.floatingsearchview.util.Util;
+import com.bumptech.glide.Glide;
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.model.Book;
 import com.example.xmfy.yzubookshop.widget.RichText;
@@ -22,9 +24,15 @@ import java.util.List;
  */
 public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResultsListAdapter.ViewHolder>{
 
+    private Context context;
+
     private List<Book> bookList = new ArrayList<>();
 
     private int mLastAnimatedItemPosition = -1;
+
+    public SearchResultsListAdapter(Context context) {
+        this.context = context;
+    }
 
     public interface OnItemClickListener{
         void onClick(Book book);
@@ -54,6 +62,7 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         holder.tv_buy_price.setText(book.getPrice()+"");
         holder.rt_buy_views.setText(book.getViews()+"");
         holder.rt_buy_collects.setText(book.getViews()+"");
+        Glide.with(context).load(book.getPhotoUrl().split(" ")[0]).into(holder.iv_buy_pic);
 
         if(mLastAnimatedItemPosition < position){
             animateItem(holder.itemView);

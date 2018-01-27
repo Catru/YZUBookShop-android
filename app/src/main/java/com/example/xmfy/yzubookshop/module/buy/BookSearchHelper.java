@@ -1,10 +1,13 @@
 package com.example.xmfy.yzubookshop.module.buy;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Filter;
+import android.widget.Toast;
 
 import com.example.xmfy.yzubookshop.model.Book;
+import com.example.xmfy.yzubookshop.model.FormedData;
+import com.example.xmfy.yzubookshop.net.AsyncResponse;
+import com.example.xmfy.yzubookshop.net.BookSearchAsyncTask;
+import com.example.xmfy.yzubookshop.net.BookSuggestionAsyncTask;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -13,8 +16,6 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -27,14 +28,9 @@ public class BookSearchHelper {
     private static List<Book> bookList = new ArrayList<>();
 
     private static List<BookSuggestion> bookSuggestions = new ArrayList<>(Arrays.asList(
-            new BookSuggestion("解忧杂货铺1"),
-            new BookSuggestion("解忧杂货铺2"),
-            new BookSuggestion("解忧杂货铺3"),
-            new BookSuggestion("解忧杂货铺4"),
-            new BookSuggestion("解忧杂货铺5"),
-            new BookSuggestion("解忧杂货铺6"),
-            new BookSuggestion("解忧杂货铺7"),
-            new BookSuggestion("解忧杂货铺8")
+            new BookSuggestion("title","解忧杂货铺1"),
+            new BookSuggestion("keywords","杂货铺"),
+            new BookSuggestion("author","东野圭吾")
     ));
 
     public interface OnFindColorsListener {
@@ -62,87 +58,52 @@ public class BookSearchHelper {
             bookSuggestion.setHistory(false);
     }
 
-    public static void findSuggestions(Context context, String query, final int limit, final long simulatedDelay,
+    public static void findSuggestions(final Context context, final String query, final int limit, final int c1, final int c2, final long simulatedDelay,
                                        final OnFindSuggestionsListener listener) {
-        new Filter() {
-
+        BookSearchHelper.resetSuggestionsHistory();
+        BookSuggestionAsyncTask task = new BookSuggestionAsyncTask();
+        task.setAsyncResponse(new AsyncResponse<List<BookSuggestion>>() {
             @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                try {
-                    Thread.sleep(simulatedDelay);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                BookSearchHelper.resetSuggestionsHistory();
-                List<BookSuggestion> bookSuggestionList = new ArrayList<BookSuggestion>();
-                if (!(constraint == null || constraint.length() == 0)) {
-
-                    for (BookSuggestion suggestion : bookSuggestions) {
-                        if (suggestion.getBody().toUpperCase()
-                                .contains(constraint.toString().toUpperCase())) {
-
-                            bookSuggestionList.add(suggestion);
-                            if (limit != -1 && bookSuggestionList.size() == limit) {
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                FilterResults results = new FilterResults();
-                Collections.sort(bookSuggestionList, new Comparator<BookSuggestion>() {
-                    @Override
-                    public int compare(BookSuggestion book1, BookSuggestion book2) {
-                        return book1.isHistory() ? -1 : 0;
-                    }
-                });
-                results.values = bookSuggestionList;
-                results.count = bookSuggestionList.size();
-
-                return results;
+            public void onDataReceivedSuccess(FormedData<List<BookSuggestion>> formedData) {
+                if (formedData.isSuccess()){
+                    listener.onResults(formedData.getData());
+                } else
+                    Toast.makeText(context, formedData.getError(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            protected void publishResults(CharSequence charSequence, FilterResults results) {
-                if (listener != null) {
-                    listener.onResults((List<BookSuggestion>) results.values);
-                }
+            public void onDataReceivedFailed() {
+                Toast.makeText(context, "网络连接错误, 请检查相关设置!", Toast.LENGTH_SHORT).show();
             }
-        }.filter(query);
+        });
+        task.execute(query, limit+"", c1+"", c2+"");
+//        try {
+//            Thread.sleep(simulatedDelay)
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
-    public static void findBooks(Context context, String query, final OnFindColorsListener listener) {
+    public static void findBooks(final Context context, String type, String value, final OnFindColorsListener listener) {
         initBookList(context);
-        new Filter() {
-
+        BookSearchAsyncTask<List<Book>> task = new BookSearchAsyncTask<>();
+        task.setResponseType(new TypeToken<FormedData<List<Book>>>(){});
+        task.setAsyncResponse(new AsyncResponse<List<Book>>() {
             @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-
-                List<Book> books = new ArrayList<>();
-                if (!(constraint == null || constraint.length() == 0)) {
-                    for (Book book : bookList) {
-                        if (book.getTitle().toUpperCase()
-                                .contains(constraint.toString().toUpperCase())) {
-                            books.add(book);
-                        }
-                    }
-
+            public void onDataReceivedSuccess(FormedData<List<Book>> formedData) {
+                if (formedData.isSuccess()){
+                    listener.onResults(formedData.getData());
+                }else {
+                    Toast.makeText(context, formedData.getError(), Toast.LENGTH_SHORT).show();
                 }
-                FilterResults results = new FilterResults();
-                results.values = books;
-                results.count = books.size();
-                return results;
             }
 
             @Override
-            protected void publishResults(CharSequence charSequence, FilterResults results) {
-                Log.e("publishResults", results.values.toString());
-                Log.e("publishResults", results.count+"");
-                if (listener != null) {
-                    listener.onResults((List<Book>) results.values);
-                }
+            public void onDataReceivedFailed() {
+                Toast.makeText(context, "网络连接异常,请检查相关设置!", Toast.LENGTH_SHORT).show();
             }
-        }.filter(query);
+        });
+        task.execute(type, value);
     }
 
     private static void initBookList(Context context) {
@@ -153,9 +114,7 @@ public class BookSearchHelper {
     }
 
     private static String loadJson(Context context) {
-
         String jsonString;
-
         try {
             InputStream is = context.getAssets().open(COLORS_FILE_NAME);
             int size = is.available();
@@ -167,7 +126,6 @@ public class BookSearchHelper {
             ex.printStackTrace();
             return null;
         }
-
         return jsonString;
     }
 

@@ -1,5 +1,6 @@
 package com.example.xmfy.yzubookshop.module.buy;
 
+import android.os.Bundle;
 import android.os.Parcel;
 
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
@@ -9,18 +10,31 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
  */
 public class BookSuggestion implements SearchSuggestion {
 
-    private int id;
-    private String name;
+    private String type;
+    private String value;
     private boolean isHistory = false;
 
-    public BookSuggestion(String suggestion){
-        this.name = suggestion.toLowerCase();
+    public BookSuggestion(String type, String value){
+        this.type = type;
+        this.value = value.toLowerCase();
+    }
+
+    public BookSuggestion(String type, String value, boolean isHistory) {
+        this.type = type;
+        this.value = value;
+        this.isHistory = isHistory;
     }
 
     public BookSuggestion(Parcel parcel){
-        this.id = parcel.readInt();
-        this.name = parcel.readString();
-        this.isHistory = parcel.readInt() != 0;
+        Bundle bundle = parcel.readBundle(getClass().getClassLoader());
+        this.type = bundle.getString("type");
+        this.value = bundle.getString("value");
+        this.isHistory = bundle.getBoolean("isHistory");
+//        this.isHistory = parcel.readInt() != 0;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public boolean isHistory() {
@@ -33,7 +47,7 @@ public class BookSuggestion implements SearchSuggestion {
 
     @Override
     public String getBody() {
-        return name;
+        return value;
     }
 
     public static final Creator<BookSuggestion> CREATOR = new Creator<BookSuggestion>() {
@@ -55,8 +69,18 @@ public class BookSuggestion implements SearchSuggestion {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(name);
-        parcel.writeInt(isHistory? 1 : 0);
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        bundle.putString("value", value);
+        bundle.putBoolean("isHistory", isHistory);
+    }
+
+    @Override
+    public String toString() {
+        return "BookSuggestion{" +
+                "type='" + type + '\'' +
+                ", value='" + value + '\'' +
+                ", isHistory=" + isHistory +
+                '}';
     }
 }
