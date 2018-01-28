@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/PureWhite"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="15dp">
+
+    <com.example.xmfy.yzubookshop.widget.RichText
+        android:id="@+id/rt_buy_sort"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/menubar_default"
+        android:text="默认排序"
+        android:textSize="16sp"
+        android:maxLines="1"
+        app:drawable_src="@mipmap/ic_arrow_black"
+        app:drawable_location="right"
+        app:drawable_height="20dp"
+        app:drawable_width="20dp"
+        android:layout_weight="1"/>
+    <View
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#d6d6d6"/>
+
+    <com.example.xmfy.yzubookshop.widget.RichText
+        android:id="@+id/rt_buy_category"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/menubar_default"
+        android:text="书籍分类"
+        android:textSize="16sp"
+        android:maxLines="1"
+        app:drawable_src="@mipmap/ic_arrow_black"
+        app:drawable_location="right"
+        app:drawable_height="20dp"
+        app:drawable_width="20dp"
+        android:layout_weight="1"/>
+    <View
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#d6d6d6"/>
+
+    <com.example.xmfy.yzubookshop.widget.RichText
+        android:id="@+id/rt_buy_price"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/menubar_default"
+        android:text="价格筛选"
+        android:textSize="16sp"
+        android:maxLines="1"
+        app:drawable_src="@mipmap/ic_arrow_black"
+        app:drawable_location="right"
+        app:drawable_height="20dp"
+        app:drawable_width="20dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

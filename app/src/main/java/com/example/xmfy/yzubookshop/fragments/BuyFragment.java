@@ -1,5 +1,8 @@
 package com.example.xmfy.yzubookshop.fragments;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +12,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
@@ -18,7 +25,12 @@ import com.example.xmfy.yzubookshop.module.buy.BaseBuyFragment;
 import com.example.xmfy.yzubookshop.module.buy.BookSearchHelper;
 import com.example.xmfy.yzubookshop.module.buy.BookSuggestion;
 import com.example.xmfy.yzubookshop.module.buy.SearchResultsListAdapter;
+import com.example.xmfy.yzubookshop.module.buy.sort.SortAdapter;
+import com.example.xmfy.yzubookshop.module.buy.sort.SortBean;
+import com.example.xmfy.yzubookshop.widget.RichText;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,12 +42,27 @@ public class BuyFragment extends BaseBuyFragment {
 
     private static final int SEARCH_SIZE = 5;
 
+    private String[] sort_string = {"默认排序", "价格优先", "浏览量优先", "收藏量优先", "综合排序"};
+
+    private SortAdapter sortAdapter;
+
+    private List<SortBean> sortList = new ArrayList<>(Arrays.asList(new SortBean("默认排序", true),
+            new SortBean("价格优先", false), new SortBean("浏览量优先", false), new SortBean("收藏量优先", false), new SortBean("综合排序", false)));
+
     private int c1 = 0;
     private int c2 = 0;
+
+    private View view;
 
     private FloatingSearchView mSearchView;
     private RecyclerView mSearchResultsList;
     private SearchResultsListAdapter mSearchResultsAdapter;
+
+    private RichText rt_buy_sort;
+    private RichText rt_buy_category;
+    private RichText rt_buy_price;
+
+    private PopupWindow window;
 
     private String mLastQuery = "";
 
@@ -45,26 +72,83 @@ public class BuyFragment extends BaseBuyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_buy, container, false);
+        view = inflater.inflate(R.layout.fragment_buy, container, false);
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mSearchView = view.findViewById(R.id.floating_search_view);
-        mSearchResultsList = view.findViewById(R.id.search_results_list);
+        bindView();
+        initWidgets();
         setupFloatingSearch();
         setupResultsList();
         setupDrawer();
+    }
+
+    private void bindView() {
+        mSearchView = view.findViewById(R.id.floating_search_view);
+        mSearchResultsList = view.findViewById(R.id.search_results_list);
+        rt_buy_sort = view.findViewById(R.id.rt_buy_sort);
+        rt_buy_category = view.findViewById(R.id.rt_buy_category);
+        rt_buy_price = view.findViewById(R.id.rt_buy_price);
+    }
+
+    private void initWidgets() {
+        //初始化排序列表
+        sortAdapter = new SortAdapter(getContext(), sortList);
+        View popupView_sort = getActivity().getLayoutInflater().inflate(R.layout.layout_popupwindow, null);
+        ListView lsvMore = popupView_sort.findViewById(R.id.lsvMore);
+        lsvMore.setAdapter(sortAdapter);
+        lsvMore.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (!sortList.get(i).getChecked()) {
+                    for (int k = 0; k < sortList.size(); k++)
+                        sortList.get(k).setChecked(i==k);
+                    sortAdapter.update(sortList);
+                }
+            }
+        });
+        window = new PopupWindow(popupView_sort, 400, LinearLayout.LayoutParams.WRAP_CONTENT);
+        window.setAnimationStyle(R.style.popup_window_anim);
+        window.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#F8F8F8")));
+        window.setFocusable(true);
+        window.setOutsideTouchable(true);
+        window.update();
+        rt_buy_sort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (window.isShowing()){
+                    window.dismiss();
+                } else{
+                    window.showAsDropDown(rt_buy_sort, 0, 50);
+                    rt_buy_sort.setTextColor(getContext().getResources().getColor(R.color.menubar_active, getContext().getTheme()));
+                    Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_arrow_orange, getContext().getTheme());
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    rt_buy_sort.setCompoundDrawables(null, null, drawable, null);
+                }
+            }
+        });
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                rt_buy_sort.setTextColor(getContext().getResources().getColor(R.color.menubar_default, getContext().getTheme()));
+                Drawable drawable = getContext().getResources().getDrawable(R.mipmap.ic_arrow_black, getContext().getTheme());
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                Log.e("wh", drawable.getMinimumWidth()+ "  :  "+drawable.getMinimumHeight());
+                rt_buy_sort.setCompoundDrawables(null, null, drawable, null);
+            }
+        });
     }
 
     private void setupFloatingSearch() {
         mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, String newQuery) {
-                if (!oldQuery.equals("") && newQuery.equals("")){
+                if (!oldQuery.equals("") && newQuery.equals("")) {
                     mSearchView.clearSuggestions();
-                }else {
+                } else {
                     mSearchView.showProgress();
                     BookSearchHelper.findSuggestions(getActivity(), newQuery, SEARCH_SIZE, c1, c2,
                             FIND_SUGGESTION_SIMULATED_DELAY, new BookSearchHelper.OnFindSuggestionsListener() {
@@ -121,9 +205,9 @@ public class BuyFragment extends BaseBuyFragment {
         mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
             @Override
             public void onActionMenuItemSelected(MenuItem item) {
-                if (item.getItemId() == R.id.action_search){
+                if (item.getItemId() == R.id.action_search) {
                     String query = mSearchView.getQuery();
-                    if (!query.equals(mLastQuery)){
+                    if (!query.equals(mLastQuery)) {
                         BookSearchHelper.findBooks(getActivity(), "", query,
                                 new BookSearchHelper.OnFindColorsListener() {
                                     @Override

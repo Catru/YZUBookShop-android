@@ -39,7 +39,7 @@ public class AppConstants {
 
     public static final String SELLING_UPLOADPHOTOS = "http://192.168.1.100:8080/selling/uploadPhotos";
 
-    public static final String BOOK_BUY_SUGGESTION = "http://192.168.0.101:8080/buy/bookSuggestion";
+    public static final String BOOK_BUY_SUGGESTION = "http://192.168.1.100:8080/buy/bookSuggestion";
 
-    public static final String BOOK_SEARCH_BY_TYPE = "http://192.168.0.101:8080/buy/searchByType";
+    public static final String BOOK_SEARCH_BY_TYPE = "http://192.168.1.100:8080/buy/searchByType";
 }

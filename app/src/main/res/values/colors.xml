@@ -25,5 +25,8 @@
     <color name="icon_selling_edit">#C9C9CE</color>
     <color name="icon_selling_delete">#F93F25</color>
 
+    <color name="menubar_default">#767676</color>
+    <color name="menubar_active">#E2752F</color>
+
 
 </resources>

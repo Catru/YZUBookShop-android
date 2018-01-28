@@ -98,4 +98,11 @@
         <item name="actionBarSize">@dimen/actionBarSize</item>
         <item name="colorPrimaryDark">#CCa500</item>
     </style>
+
+    <!-- pupupwindow的弹出和消失动画 -->
+    <style name="popup_window_anim">
+        <item name="android:windowEnterAnimation">@anim/popwindow_in</item>
+        <item name="android:windowExitAnimation">@anim/popwindow_out</item>
+    </style>
+
 </resources>
