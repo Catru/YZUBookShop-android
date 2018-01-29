@@ -1,14 +1,92 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <categoryList>
     <c1 id = "1" name = "小说">
-        <c2 id = "11" name = "社会" />
-        <c2 id = "12" name = "侦探/悬疑/推理"/>
-        <c2 id = "13" name = "情感"/>
-        <c2 id = "14" name = "世界名著"/>
-        <c2 id = "15" name = "历史"/>
+        <c2 id = "11" name = "世界名著" />
+        <c2 id = "12" name = "中国古典小说"/>
+        <c2 id = "13" name = "中国当代小说"/>
+        <c2 id = "14" name = "外国小说"/>
+        <c2 id = "15" name = "科幻小说"/>
+        <c2 id = "16" name = "侦探/悬疑/推理"/>
+        <c2 id = "17" name = "情感"/>
+        <c2 id = "18" name = "社会" />
+        <c2 id = "19" name = "其它"/>
     </c1>
+
     <c1 id="2" name="文学">
         <c2 id = "21" name = "中国现当代随笔"/>
-        <c2 id = "22" name = "名家作品"/>
+        <c2 id = "22" name = "文集"/>
+        <c2 id = "23" name = "中国古诗词" />
+        <c2 id = "24" name = "文学理论" />
+        <c2 id = "25" name = "纪实文学" />
+        <c2 id = "26" name = "评论与鉴赏" />
+        <c2 id = "27" name = "中国现当代诗歌" />
+        <c2 id = "28" name = "戏剧" />
+        <c2 id = "29" name = "英文原版" />
+        <c2 id = "30" name = "其它" />
     </c1>
+
+    <c1 id="3" name="人文社科">
+        <c2 id = "31" name = "历史"/>
+        <c2 id = "32" name = "文化"/>
+        <c2 id = "33" name = "古籍" />
+        <c2 id = "34" name = "心理学" />
+        <c2 id = "35" name = "哲学/宗教" />
+        <c2 id = "36" name = "政治/军事" />
+        <c2 id = "37" name = "社会科学" />
+        <c2 id = "38" name = "法律" />
+        <c2 id = "39" name = "其它" />
+    </c1>
+
+    <c1 id="4" name="管理">
+        <c2 id = "41" name = "一般管理学"/>
+        <c2 id = "42" name = "会计"/>
+        <c2 id = "43" name = "市场/营销" />
+        <c2 id = "44" name = "战略管理" />
+        <c2 id = "45" name = "生产与运作管理" />
+        <c2 id = "46" name = "管理信息系统" />
+        <c2 id = "47" name = "金融/投资" />
+        <c2 id = "48" name = "创业" />
+        <c2 id = "49" name = "工具书" />
+        <c2 id = "50" name = "其它" />
+    </c1>
+
+    <c1 id="5" name="经济">
+        <c2 id = "51" name = "经济学理论"/>
+        <c2 id = "52" name = "经济数学"/>
+        <c2 id = "53" name = "区域经济" />
+        <c2 id = "54" name = "财政税收" />
+        <c2 id = "55" name = "统计 审计" />
+        <c2 id = "56" name = "贸易政策" />
+        <c2 id = "57" name = "通货膨胀" />
+        <c2 id = "58" name = "中国经济" />
+        <c2 id = "59" name = "国际经济" />
+        <c2 id = "60" name = "保险" />
+    </c1>
+
+    <c1 id="6" name="成功/励志">
+        <c2 id = "61" name = "人生哲学"/>
+        <c2 id = "62" name = "心灵与修养"/>
+        <c2 id = "63" name = "性格与习惯" />
+        <c2 id = "64" name = "智商/智谋" />
+        <c2 id = "65" name = "情商/情绪管理" />
+        <c2 id = "66" name = "人在职场" />
+        <c2 id = "67" name = "人际交往" />
+        <c2 id = "68" name = "处世学" />
+        <c2 id = "69" name = "礼仪" />
+        <c2 id = "70" name = "口才/演讲" />
+    </c1>
+
+    <c1 id="7" name="计算机">
+        <c2 id = "71" name = "计算机理论"/>
+        <c2 id = "72" name = "操作系统"/>
+        <c2 id = "73" name = "数据库" />
+        <c2 id = "74" name = "程序设计" />
+        <c2 id = "75" name = "网络通信" />
+        <c2 id = "76" name = "图形图像 多媒体" />
+        <c2 id = "77" name = "人工智能" />
+        <c2 id = "78" name = "信息安全" />
+        <c2 id = "79" name = "计算机教材" />
+        <c2 id = "80" name = "其它" />
+    </c1>
+
 </categoryList>

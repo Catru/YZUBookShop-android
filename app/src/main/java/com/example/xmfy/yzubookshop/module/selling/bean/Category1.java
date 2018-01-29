@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by xmfy on 2018/1/18.
  */
-public class Category1 implements IPickerViewData{
+public class Category1 extends Category implements IPickerViewData{
     private int id;
     private String name;
     private List<Category2> cList;

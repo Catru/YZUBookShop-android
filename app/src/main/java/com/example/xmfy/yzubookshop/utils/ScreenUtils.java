@@ -24,7 +24,7 @@ public class ScreenUtils {
         return screenH;
     }
 
-    private static void initScreen(Activity mActivity){
+    public static void initScreen(Activity mActivity){
         DisplayMetrics metric = new DisplayMetrics();
         mActivity.getWindowManager().getDefaultDisplay().getMetrics(metric);
         screenW = metric.widthPixels;

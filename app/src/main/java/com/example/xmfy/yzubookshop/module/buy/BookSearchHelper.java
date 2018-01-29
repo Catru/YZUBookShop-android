@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.example.xmfy.yzubookshop.model.Book;
 import com.example.xmfy.yzubookshop.model.FormedData;
+import com.example.xmfy.yzubookshop.module.buy.searchTab.SearchConditions;
 import com.example.xmfy.yzubookshop.net.AsyncResponse;
 import com.example.xmfy.yzubookshop.net.BookSearchAsyncTask;
 import com.example.xmfy.yzubookshop.net.BookSuggestionAsyncTask;
@@ -104,6 +105,28 @@ public class BookSearchHelper {
             }
         });
         task.execute(type, value);
+    }
+
+    public static void findBooks(final Context context, SearchConditions conditions, final OnFindColorsListener listener) {
+        initBookList(context);
+        BookSearchAsyncTask<List<Book>> task = new BookSearchAsyncTask<>();
+        task.setResponseType(new TypeToken<FormedData<List<Book>>>(){});
+        task.setAsyncResponse(new AsyncResponse<List<Book>>() {
+            @Override
+            public void onDataReceivedSuccess(FormedData<List<Book>> formedData) {
+                if (formedData.isSuccess()){
+                    listener.onResults(formedData.getData());
+                }else {
+                    Toast.makeText(context, formedData.getError(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onDataReceivedFailed() {
+                Toast.makeText(context, "网络连接异常,请检查相关设置!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        task.execute(conditions.getType(), conditions.getValue(), conditions.getC1()+"", conditions.getC2()+"", conditions.getMin()+"", conditions.getMax()+"", conditions.getSort()+"", conditions.getAccount());
     }
 
     private static void initBookList(Context context) {

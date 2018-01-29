@@ -19,6 +19,15 @@ android {
     }
 }
 
+allprojects{
+    repositories{
+        jcenter()
+        maven{
+            url "https://jitpack.io"
+        }
+    }
+}
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -37,6 +46,8 @@ dependencies {
     compile 'me.iwf.photopicker:PhotoPicker:0.9.12@aar'
     compile 'com.contrarywind:Android-PickerView:3.2.7'
     compile 'com.github.arimorty:floatingsearchview:2.1.1'
+    compile 'com.github.Jay-Goo:RangeSeekBar:v1.2.0'
+
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested
