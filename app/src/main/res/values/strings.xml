@@ -11,4 +11,5 @@
     <item name="delivery_item" type="id" />
 
     <string name="title_activity_delivery_detail">DeliveryDetailActivity</string>
+    <string name="title_activity_collection">CollectionActivity</string>
 </resources>

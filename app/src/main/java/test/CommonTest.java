@@ -22,7 +22,7 @@ public class CommonTest{
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
         map.put("type", "title");
         map.put("value", "2");
-        String s = OKHttpUtils.doGetWithParams(AppConstants.BOOK_SEARCH_BY_TYPE, map);
+        String s = OKHttpUtils.doGetWithParams(AppConstants.QUERY_BY_TYPE, map);
         Gson gson = new Gson();
         FormedData data = gson.fromJson(s, new TypeToken<FormedData<List<Book>>>(){}.getType());
         System.out.println(data.toString());

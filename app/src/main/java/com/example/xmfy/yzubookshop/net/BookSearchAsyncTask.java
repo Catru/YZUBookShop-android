@@ -1,6 +1,7 @@
 package com.example.xmfy.yzubookshop.net;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.xmfy.yzubookshop.global.AppConstants;
 import com.example.xmfy.yzubookshop.model.FormedData;
@@ -29,19 +30,27 @@ public class BookSearchAsyncTask<T> extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        map.put("type", strings[0]);
-        map.put("value", strings[1]);
-        map.put("c1", strings[2]);
-        map.put("c2", strings[3]);
-        map.put("min", strings[4]);
-        map.put("max", strings[5]);
-        map.put("sort", strings[6]);
-        map.put("account", strings[7]);
-        return OKHttpUtils.doGetWithParams(AppConstants.BOOK_SEARCH_BY_TYPE, map);
+        if (strings.length == 3){
+            map.put("type", strings[0]);
+            map.put("value", strings[1]);
+            map.put("account", strings[2]);
+            return OKHttpUtils.doGetWithParams(AppConstants.QUERY_BY_TYPE, map);
+        }else {
+            map.put("type", strings[0]);
+            map.put("value", strings[1]);
+            map.put("c1", strings[2]);
+            map.put("c2", strings[3]);
+            map.put("min", strings[4]);
+            map.put("max", strings[5]);
+            map.put("sort", strings[6]);
+            map.put("account", strings[7]);
+            return OKHttpUtils.doGetWithParams(AppConstants.QUERY_BOOK, map);
+        }
     }
 
     @Override
     protected void onPostExecute(String s) {
+        Log.e("Book", s);
         super.onPostExecute(s);
         Gson gson = new Gson();
         FormedData data = gson.fromJson(s, responseType.getType());

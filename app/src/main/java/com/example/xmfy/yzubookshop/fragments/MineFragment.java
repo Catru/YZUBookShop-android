@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.xmfy.yzubookshop.R;
+import com.example.xmfy.yzubookshop.module.user.CollectionActivity;
 import com.example.xmfy.yzubookshop.module.user.DeliveryActivity;
 import com.example.xmfy.yzubookshop.module.user.LoginActivity;
 import com.example.xmfy.yzubookshop.module.user.UserInfoActivity;
@@ -96,6 +97,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), UserInfoActivity.class));
                 break;
             case R.id.ll_mycollection:
+                startActivity(new Intent(getActivity(), CollectionActivity.class));
                 break;
             case R.id.ll_receive_address:
                 startActivity(new Intent(getActivity(), DeliveryActivity.class));

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.example.xmfy.yzubookshop.model.Book;
+import com.example.xmfy.yzubookshop.model.BookSearchBean;
 import com.example.xmfy.yzubookshop.model.FormedData;
 import com.example.xmfy.yzubookshop.module.buy.searchTab.SearchConditions;
 import com.example.xmfy.yzubookshop.net.AsyncResponse;
 import com.example.xmfy.yzubookshop.net.BookSearchAsyncTask;
 import com.example.xmfy.yzubookshop.net.BookSuggestionAsyncTask;
+import com.example.xmfy.yzubookshop.utils.LoginUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -35,7 +37,7 @@ public class BookSearchHelper {
     ));
 
     public interface OnFindColorsListener {
-        void onResults(List<Book> results);
+        void onResults(List<BookSearchBean> results);
     }
 
     public interface OnFindSuggestionsListener {
@@ -87,11 +89,11 @@ public class BookSearchHelper {
 
     public static void findBooks(final Context context, String type, String value, final OnFindColorsListener listener) {
         initBookList(context);
-        BookSearchAsyncTask<List<Book>> task = new BookSearchAsyncTask<>();
-        task.setResponseType(new TypeToken<FormedData<List<Book>>>(){});
-        task.setAsyncResponse(new AsyncResponse<List<Book>>() {
+        BookSearchAsyncTask<List<BookSearchBean>> task = new BookSearchAsyncTask<>();
+        task.setResponseType(new TypeToken<FormedData<List<BookSearchBean>>>(){});
+        task.setAsyncResponse(new AsyncResponse<List<BookSearchBean>>() {
             @Override
-            public void onDataReceivedSuccess(FormedData<List<Book>> formedData) {
+            public void onDataReceivedSuccess(FormedData<List<BookSearchBean>> formedData) {
                 if (formedData.isSuccess()){
                     listener.onResults(formedData.getData());
                 }else {
@@ -104,16 +106,16 @@ public class BookSearchHelper {
                 Toast.makeText(context, "网络连接异常,请检查相关设置!", Toast.LENGTH_SHORT).show();
             }
         });
-        task.execute(type, value);
+        task.execute(type, value, LoginUtils.getAccount(context.getSharedPreferences("User", Context.MODE_PRIVATE)));
     }
 
     public static void findBooks(final Context context, SearchConditions conditions, final OnFindColorsListener listener) {
         initBookList(context);
-        BookSearchAsyncTask<List<Book>> task = new BookSearchAsyncTask<>();
-        task.setResponseType(new TypeToken<FormedData<List<Book>>>(){});
-        task.setAsyncResponse(new AsyncResponse<List<Book>>() {
+        BookSearchAsyncTask<List<BookSearchBean>> task = new BookSearchAsyncTask<>();
+        task.setResponseType(new TypeToken<FormedData<List<BookSearchBean>>>(){});
+        task.setAsyncResponse(new AsyncResponse<List<BookSearchBean>>() {
             @Override
-            public void onDataReceivedSuccess(FormedData<List<Book>> formedData) {
+            public void onDataReceivedSuccess(FormedData<List<BookSearchBean>> formedData) {
                 if (formedData.isSuccess()){
                     listener.onResults(formedData.getData());
                 }else {

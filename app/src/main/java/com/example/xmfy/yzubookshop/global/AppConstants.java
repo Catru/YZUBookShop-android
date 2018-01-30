@@ -41,5 +41,11 @@ public class AppConstants {
 
     public static final String BOOK_BUY_SUGGESTION = "http://192.168.1.100:8080/buy/bookSuggestion";
 
-    public static final String BOOK_SEARCH_BY_TYPE = "http://192.168.1.100:8080/buy/searchByType";
+    public static final String QUERY_BOOK = "http://192.168.1.100:8080/buy/queryBooks";
+
+    public static final String QUERY_BY_TYPE = "http://192.168.1.100:8080/buy/queryBooksByType";
+
+    public static final String COLLECTS_CHANGE = "http://192.168.1.100:8080/collect/change";
+
+    public static final String COLLECTS_QUERY = "http://192.168.1.100:8080/collect/query";
 }

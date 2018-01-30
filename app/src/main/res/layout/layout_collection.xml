@@ -1,0 +1,21 @@
+<com.example.xmfy.yzubookshop.widget.CustomToolBar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/PureWhite"
+    app:left_btn_src="@drawable/icon_back"
+    app:left_btn_visible="true"
+    app:title_text="收藏夹"
+    app:title_visible="true"
+    android:orientation="vertical">
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/lv_mycollection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/White"/>
+
+
+</com.example.xmfy.yzubookshop.widget.CustomToolBar>
+

@@ -1,6 +1,5 @@
 package com.example.xmfy.yzubookshop.module.selling;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +21,6 @@ import java.util.List;
 public class SellingAdapter extends BaseAdapter{
     private List<Selling> sList;
     private Context context;
-
-    final static int TYPE_ADD = 1;
-    final static int TYPE_PHOTO = 2;
-
-    final static int MAX = 9;
 
     public SellingAdapter(List<Selling> sList, Context context) {
         this.sList = sList;
@@ -55,7 +49,7 @@ public class SellingAdapter extends BaseAdapter{
 
     @Override
     public View getView(int i, View v, ViewGroup viewGroup) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (v == null){
             v = LayoutInflater.from(context).inflate(R.layout.item_selling, viewGroup, false);
             holder = new ViewHolder(v);
@@ -69,7 +63,7 @@ public class SellingAdapter extends BaseAdapter{
         holder.price.setText(String.format("￥%.2f", selling.getPrice()));
         holder.views.setText(selling.getViews()+"");
         holder.collects.setText(selling.getCollects()+"");
-        ((Activity)context).runOnUiThread(new ImgRunnable(context, selling.getPhotoUrl().split(" ")[0], holder.cover));
+        Glide.with(context).load(selling.getPhotoUrl().split(" ")[0]).into(holder.cover);
         return v;
     }
 
@@ -87,23 +81,5 @@ public class SellingAdapter extends BaseAdapter{
             cover = v.findViewById(R.id.iv_selling_pic);
         }
     }
-
-    class ImgRunnable implements Runnable {
-        private Context context;
-        private String url;
-        private ImageView imageView;
-
-        public ImgRunnable(Context context, String url, ImageView imageView) {
-            this.context = context;
-            this.url = url;
-            this.imageView = imageView;
-        }
-
-        @Override
-        public void run() {
-            Glide.with(context).load(url).into(imageView);
-        }
-    }
-
 
 }

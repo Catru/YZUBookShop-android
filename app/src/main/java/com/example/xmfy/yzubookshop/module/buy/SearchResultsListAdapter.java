@@ -2,6 +2,7 @@ package com.example.xmfy.yzubookshop.module.buy;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,8 @@ import android.widget.TextView;
 import com.arlib.floatingsearchview.util.Util;
 import com.bumptech.glide.Glide;
 import com.example.xmfy.yzubookshop.R;
-import com.example.xmfy.yzubookshop.model.Book;
+import com.example.xmfy.yzubookshop.model.BookSearchBean;
+import com.example.xmfy.yzubookshop.utils.CommonUtils;
 import com.example.xmfy.yzubookshop.widget.RichText;
 
 import java.util.ArrayList;
@@ -26,21 +28,36 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
 
     private Context context;
 
-    private List<Book> bookList = new ArrayList<>();
+    private List<BookSearchBean> bookList = new ArrayList<>();
 
     private int mLastAnimatedItemPosition = -1;
 
+    private Drawable collected;
+
+
     public SearchResultsListAdapter(Context context) {
         this.context = context;
+        initDrawable();
+    }
+
+    private void initDrawable() {
+        collected =context.getResources().getDrawable(R.mipmap.icon_collected, context.getTheme());
+        collected.setBounds(0, 0, CommonUtils.dip2px(context, 20), CommonUtils.dip2px(context, 20));
     }
 
     public interface OnItemClickListener{
-        void onClick(Book book);
+        void onClick(BookSearchBean book);
+    }
+
+    public interface OnCollectsClickListener{
+        void onClick(RichText rt, BookSearchBean book);
     }
 
     private OnItemClickListener mItemsOnClickListener;
 
-    public void swapData(List<Book> newBookList){
+    private OnCollectsClickListener mCollectsClickListener;
+
+    public void swapData(List<BookSearchBean> newBookList){
         bookList = newBookList;
         notifyDataSetChanged();
     }
@@ -49,21 +66,27 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         this.mItemsOnClickListener = onClickListener;
     }
 
+    public void setCollectsClickListener(OnCollectsClickListener onCollectsClickListener){
+        this.mCollectsClickListener = onCollectsClickListener;
+    }
+
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_buy_book, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        Book book = bookList.get(position);
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        BookSearchBean book = bookList.get(position);
         holder.tv_buy_title.setText(book.getTitle());
         holder.tv_buy_author.setText(book.getAuthor());
         holder.tv_buy_price.setText(book.getPrice()+"");
         holder.rt_buy_views.setText(book.getViews()+"");
         holder.rt_buy_collects.setText(book.getViews()+"");
         Glide.with(context).load(book.getPhotoUrl().split(" ")[0]).into(holder.iv_buy_pic);
-
+        if (book.getIsCollected() != 0 )
+            holder.rt_buy_collects.setCompoundDrawables(collected, null, null, null);
         if(mLastAnimatedItemPosition < position){
             animateItem(holder.itemView);
             mLastAnimatedItemPosition = position;
@@ -74,6 +97,15 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
                 @Override
                 public void onClick(View v) {
                     mItemsOnClickListener.onClick(bookList.get(position));
+                }
+            });
+        }
+
+        if (mCollectsClickListener != null){
+            holder.rt_buy_collects.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mCollectsClickListener.onClick(holder.rt_buy_collects, bookList.get(position));
                 }
             });
         }

@@ -1,6 +1,8 @@
 package com.example.xmfy.yzubookshop.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,17 +12,20 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.xmfy.yzubookshop.R;
-import com.example.xmfy.yzubookshop.model.Book;
+import com.example.xmfy.yzubookshop.model.BookSearchBean;
 import com.example.xmfy.yzubookshop.module.buy.BaseBuyFragment;
 import com.example.xmfy.yzubookshop.module.buy.BookSearchHelper;
 import com.example.xmfy.yzubookshop.module.buy.BookSuggestion;
 import com.example.xmfy.yzubookshop.module.buy.SearchResultsListAdapter;
 import com.example.xmfy.yzubookshop.module.buy.searchTab.ClassifyTab;
 import com.example.xmfy.yzubookshop.module.buy.searchTab.SearchConditions;
+import com.example.xmfy.yzubookshop.net.CollectionAsyncTask;
+import com.example.xmfy.yzubookshop.utils.CommonUtils;
 import com.example.xmfy.yzubookshop.utils.LoginUtils;
 import com.example.xmfy.yzubookshop.widget.RichText;
 
@@ -39,6 +44,8 @@ public class BuyFragment extends BaseBuyFragment {
     private int c2 = 0;
 
     private View view;
+    private Context context;
+    private SharedPreferences preferences;
 
     private FloatingSearchView mSearchView;
     private RecyclerView mSearchResultsList;
@@ -52,6 +59,9 @@ public class BuyFragment extends BaseBuyFragment {
 
     private String mLastQuery = "";
 
+    private Drawable collected;
+    private Drawable uncollected;
+
     public BuyFragment() {
     }
 
@@ -59,6 +69,7 @@ public class BuyFragment extends BaseBuyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_buy, container, false);
+        context = getContext();
         return view;
     }
 
@@ -87,6 +98,14 @@ public class BuyFragment extends BaseBuyFragment {
         searchConditions = new SearchConditions();
         searchConditions.setAccount(LoginUtils.getAccount(getContext().getSharedPreferences("User", Context.MODE_PRIVATE)));
         tab.setSearchConditions(searchConditions);
+
+        collected = context.getResources().getDrawable(R.mipmap.icon_collected, context.getTheme());
+        int w = CommonUtils.dip2px(context, 20);
+        collected.setBounds(0, 0, w, w);
+        uncollected = context.getResources().getDrawable(R.mipmap.icon_uncollected, context.getTheme());
+        uncollected.setBounds(0, 0, w, w);
+
+        preferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
     }
 
     private void setupFloatingSearch() {
@@ -117,7 +136,7 @@ public class BuyFragment extends BaseBuyFragment {
                 BookSearchHelper.findBooks(getActivity(), bookSuggestion.getType(), bookSuggestion.getBody(),
                         new BookSearchHelper.OnFindColorsListener() {
                             @Override
-                            public void onResults(List<Book> results) {
+                            public void onResults(List<BookSearchBean> results) {
                                 mSearchResultsAdapter.swapData(results);
                             }
                         });
@@ -130,7 +149,7 @@ public class BuyFragment extends BaseBuyFragment {
                 BookSearchHelper.findBooks(getActivity(), searchConditions,
                         new BookSearchHelper.OnFindColorsListener() {
                             @Override
-                            public void onResults(List<Book> results) {
+                            public void onResults(List<BookSearchBean> results) {
                                 mSearchResultsAdapter.swapData(results);
                             }
                         });
@@ -157,7 +176,7 @@ public class BuyFragment extends BaseBuyFragment {
                     BookSearchHelper.findBooks(getActivity(), searchConditions,
                             new BookSearchHelper.OnFindColorsListener() {
                                 @Override
-                                public void onResults(List<Book> results) {
+                                public void onResults(List<BookSearchBean> results) {
                                     mSearchResultsAdapter.swapData(results);
                                 }
                             });
@@ -182,8 +201,26 @@ public class BuyFragment extends BaseBuyFragment {
         mSearchResultsList.setLayoutManager(new LinearLayoutManager(getContext()));
         mSearchResultsAdapter.setItemsOnClickListener(new SearchResultsListAdapter.OnItemClickListener() {
             @Override
-            public void onClick(Book book) {
+            public void onClick(BookSearchBean book) {
                 Log.e("buy", book.toString());
+            }
+        });
+        mSearchResultsAdapter.setCollectsClickListener(new SearchResultsListAdapter.OnCollectsClickListener() {
+            @Override
+            public void onClick(RichText rt, BookSearchBean book) {
+                String account = LoginUtils.getAccount(preferences);
+                if (!account.equals("")) {
+                    boolean isCollected = book.getIsCollected() != 0;
+                    int collectedNum = Integer.parseInt(rt.getText().toString());
+                    rt.setCompoundDrawables(isCollected ? uncollected : collected, null, null, null);
+                    rt.setText((isCollected ? collectedNum - 1 : collectedNum + 1) + "");
+                    book.setIsCollected(isCollected ? 0 : 1);
+                    CollectionAsyncTask<Integer> task = new CollectionAsyncTask<>();
+                    task.setType(CollectionAsyncTask.TYPE_CHANGE);
+                    task.execute(account, book.getId() + "", isCollected ? "delete" : "add");
+                } else {
+                    Toast.makeText(context, "请先登录后再收藏!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
