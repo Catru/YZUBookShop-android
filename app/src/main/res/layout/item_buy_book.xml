@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/iv_buy_pic"
+        android:id="@+id/iv_buy_pics"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_width="120dp"

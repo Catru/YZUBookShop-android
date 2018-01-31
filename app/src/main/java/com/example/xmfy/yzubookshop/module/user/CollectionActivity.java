@@ -1,11 +1,13 @@
 package com.example.xmfy.yzubookshop.module.user;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -14,13 +16,16 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.xmfy.yzubookshop.R;
+import com.example.xmfy.yzubookshop.model.BookSearchBean;
 import com.example.xmfy.yzubookshop.model.FormedData;
 import com.example.xmfy.yzubookshop.model.Selling;
+import com.example.xmfy.yzubookshop.module.buy.BookDetailActivity;
 import com.example.xmfy.yzubookshop.module.selling.SellingAdapter;
 import com.example.xmfy.yzubookshop.net.AsyncResponse;
 import com.example.xmfy.yzubookshop.net.CollectionAsyncTask;
 import com.example.xmfy.yzubookshop.utils.CommonUtils;
 import com.example.xmfy.yzubookshop.utils.LoginUtils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +116,28 @@ public class CollectionActivity extends AppCompatActivity {
                 return false;
             }
         });
+        lv_mycollection.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Selling s = sList.get(i);
+                BookSearchBean book = new BookSearchBean();
+                book.setId(s.getId());
+                book.setPhotoUrl(s.getPhotoUrl());
+                book.setTitle(s.getTitle());
+                book.setAuthor(s.getAuthor());
+                book.setPrice(s.getPrice());
+                book.setViews(s.getViews());
+                book.setKeywords(s.getKeywords());
+                book.setCollects(s.getCollects());
+                book.setDescription(s.getDescription());
+                book.setIsCollected(1);
+                Intent intent = new Intent(CollectionActivity.this, BookDetailActivity.class);
+                intent.putExtra("book", new Gson().toJson(book));
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private void loadData() {

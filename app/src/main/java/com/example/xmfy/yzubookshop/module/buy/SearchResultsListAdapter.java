@@ -83,7 +83,7 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         holder.tv_buy_author.setText(book.getAuthor());
         holder.tv_buy_price.setText(book.getPrice()+"");
         holder.rt_buy_views.setText(book.getViews()+"");
-        holder.rt_buy_collects.setText(book.getViews()+"");
+        holder.rt_buy_collects.setText(book.getCollects()+"");
         Glide.with(context).load(book.getPhotoUrl().split(" ")[0]).into(holder.iv_buy_pic);
         if (book.getIsCollected() != 0 )
             holder.rt_buy_collects.setCompoundDrawables(collected, null, null, null);
@@ -126,7 +126,7 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
 
         public ViewHolder(View v) {
             super(v);
-            iv_buy_pic = v.findViewById(R.id.iv_buy_pic);
+            iv_buy_pic = v.findViewById(R.id.iv_buy_pics);
             tv_buy_title = v.findViewById(R.id.tv_buy_title);
             tv_buy_author = v.findViewById(R.id.tv_buy_author);
             tv_buy_price = v.findViewById(R.id.tv_buy_price);

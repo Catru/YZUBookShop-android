@@ -1,0 +1,249 @@
+<com.example.xmfy.yzubookshop.widget.CustomToolBar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:left_btn_src="@drawable/icon_back"
+    app:left_btn_visible="true"
+    app:title_text="书籍详情"
+    app:title_visible="true"
+    android:background="@color/PureWhite"
+    tools:context="com.example.xmfy.yzubookshop.module.buy.BookDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/bottom_bar"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:background="@drawable/layout_border">
+            <com.example.xmfy.yzubookshop.widget.RichText
+                android:id="@+id/rt_book_detail_collect"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                app:drawable_src="@mipmap/ic_unstar"
+                app:drawable_location="top"
+                app:drawable_height="35dp"
+                app:drawable_width="35dp"
+                android:text="收藏"
+                android:textSize="16sp"
+                android:fontFamily="Helvetica"
+                android:textColor="@color/DefaultTextColor"
+                />
+            <Button
+                android:id="@+id/btn_cart"
+                android:text="加入购物车"
+                android:textSize="20sp"
+                android:fontFamily="Helvetica"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/book_to_cart"/>
+
+            <Button
+                android:id="@+id/btn_buy"
+                android:text="立即购买"
+                android:textSize="20sp"
+                android:fontFamily="Helvetica"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/book_direct_buy"/>
+        </LinearLayout>
+
+        <com.example.xmfy.yzubookshop.widget.ScrollViewGroup
+            android:layout_above="@id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.example.xmfy.yzubookshop.widget.CustomScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/iv_book_detail_pics"
+                        android:layout_width="match_parent"
+                        android:layout_height="360dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/sample_book" />
+
+                    <TextView
+                        android:id="@+id/tv_book_detail_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="20dp"
+                        android:text=" 数学之美(第二版)"
+                        android:textSize="26dp"
+                        android:fontFamily="Helvetica"
+                        android:textColor="@color/PureBlack"/>
+
+                    <TextView
+                        android:id="@+id/tv_book_detail_author"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="作者:刘汝佳"
+                        android:textSize="18sp"
+                        android:fontFamily="Helvetica"
+                        android:textColor="@color/DefaultTextColor"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="价格:"
+                            android:textSize="18dp"
+                            android:fontFamily="Helvetica"
+                            android:textColor="@color/DefaultTextColor"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="  ￥"
+                            android:textSize="18dp"
+                            android:fontFamily="Helvetica"
+                            android:textColor="@color/PriceOrange"/>
+
+                        <TextView
+                            android:id="@+id/tv_book_detail_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="35.6"
+                            android:textSize="20dp"
+                            android:inputType="number"
+                            android:fontFamily="Helvetica"
+                            android:textColor="@color/PriceOrange"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="浏览数: "
+                            android:textSize="16dp"
+                            android:fontFamily="Helvetica"
+                            android:textColor="@color/DefaultTextColor"/>
+                        <TextView
+                            android:id="@+id/tv_book_detail_views"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="16dp"
+                            android:fontFamily="Helvetica"
+                            android:textColor="@color/DefaultTextColor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="100dp"
+                            android:text="收藏数: "
+                            android:textSize="16sp"
+                            android:fontFamily="Helvetica"
+                            android:textColor="@color/DefaultTextColor"/>
+                        <TextView
+                            android:id="@+id/tv_book_detail_collects"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="16sp"
+                            android:fontFamily="Helvetica"
+                            android:textColor="@color/DefaultTextColor" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.example.xmfy.yzubookshop.widget.CustomScrollView>
+
+            <com.example.xmfy.yzubookshop.widget.CustomScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_book_detail_tags"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="Helvetica"
+                            android:text="标签:"
+                            android:textSize="20sp"
+                            android:textColor="@color/PureBlack"/>
+                        <me.gujun.android.taggroup.TagGroup
+                            android:id="@+id/tag_group"
+                            style="@style/TagGroup"
+                            android:layout_marginLeft="15dp"
+                            app:atg_borderColor="@color/tag_border"
+                            app:atg_backgroundColor="@color/tag_bg"
+                            app:atg_textColor="@color/tag_text"
+                            app:atg_textSize="18sp"
+                            app:atg_horizontalSpacing="10dp"
+                            app:atg_verticalPadding="12dp"
+                            app:atg_horizontalPadding="6dp"
+                            />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_book_detail_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="Helvetica"
+                        android:text="标签:"
+                        android:textSize="17sp"
+                        android:textColor="@color/PureBlack"
+                        android:lineSpacingMultiplier="1.5"/>
+                </LinearLayout>
+            </com.example.xmfy.yzubookshop.widget.CustomScrollView>
+
+        </com.example.xmfy.yzubookshop.widget.ScrollViewGroup>
+
+
+    </RelativeLayout>
+
+</com.example.xmfy.yzubookshop.widget.CustomToolBar>

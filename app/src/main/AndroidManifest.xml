@@ -52,7 +52,8 @@
         <activity android:name=".module.selling.SellingAddActivity" />
         <activity
             android:name=".module.user.CollectionActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".module.buy.BookDetailActivity"></activity>
     </application>
 
 </manifest>

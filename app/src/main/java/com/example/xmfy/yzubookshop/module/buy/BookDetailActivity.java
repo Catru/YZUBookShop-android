@@ -1,0 +1,120 @@
+package com.example.xmfy.yzubookshop.module.buy;
+
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.example.xmfy.yzubookshop.R;
+import com.example.xmfy.yzubookshop.model.BookSearchBean;
+import com.example.xmfy.yzubookshop.net.CollectionAsyncTask;
+import com.example.xmfy.yzubookshop.utils.CommonUtils;
+import com.example.xmfy.yzubookshop.utils.LoginUtils;
+import com.example.xmfy.yzubookshop.widget.RichText;
+import com.google.gson.Gson;
+
+import me.gujun.android.taggroup.TagGroup;
+
+public class BookDetailActivity extends AppCompatActivity {
+
+    private BookSearchBean bindBook;
+    private Boolean isCollected;
+    private SharedPreferences preference;
+
+    private Button btn_back;
+
+    private ImageView iv_book_detail_pics;
+    private TextView tv_book_detail_title;
+    private TextView tv_book_detail_author;
+    private TextView tv_book_detail_price;
+    private TextView tv_book_detail_views;
+    private TextView tv_book_detail_collects;
+    private TagGroup tag_group;
+    private TextView tv_book_detail_description;
+
+    private RichText rt_book_detail_collect;
+    private Button btn_cart;
+    private Button btn_buy;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_book_detail);
+        bindView();
+        loadData();
+        initClickEvents();
+    }
+
+    private void bindView() {
+        btn_back = (Button) findViewById(R.id.toolbar_left_btn);
+        iv_book_detail_pics = (ImageView) findViewById(R.id.iv_book_detail_pics);
+        tv_book_detail_title = (TextView) findViewById(R.id.tv_book_detail_title);
+        tv_book_detail_author = (TextView) findViewById(R.id.tv_book_detail_author);
+        tv_book_detail_price = (TextView) findViewById(R.id.tv_book_detail_price);
+        tv_book_detail_views = (TextView) findViewById(R.id.tv_book_detail_views);
+        tv_book_detail_collects = (TextView) findViewById(R.id.tv_book_detail_collects);
+        tag_group = (TagGroup) findViewById(R.id.tag_group);
+        tv_book_detail_description = (TextView) findViewById(R.id.tv_book_detail_description);
+
+        rt_book_detail_collect = (RichText) findViewById(R.id.rt_book_detail_collect);
+        btn_cart = (Button) findViewById(R.id.btn_cart);
+        btn_buy = (Button) findViewById(R.id.btn_buy);
+
+        preference = getSharedPreferences("User", MODE_PRIVATE);
+    }
+
+
+    private void loadData() {
+        bindBook = new Gson().fromJson(getIntent().getStringExtra("book"), BookSearchBean.class);
+        if (bindBook != null){
+            Glide.with(this).load(bindBook.getPhotoUrl().split(" ")[0]).into(iv_book_detail_pics);
+            tv_book_detail_title.setText(bindBook.getTitle());
+            tv_book_detail_author.setText("作者:" + bindBook.getAuthor());
+            tv_book_detail_price.setText(String.format("%.2f", bindBook.getPrice()));
+            tv_book_detail_views.setText(bindBook.getViews()+"");
+            tv_book_detail_collects.setText(bindBook.getCollects()+"");
+            tv_book_detail_description.setText(bindBook.getDescription());
+            isCollected = bindBook.getIsCollected() != 0;
+            if (isCollected){
+                int w = CommonUtils.dip2px(this, 35);
+                Drawable drawable = getResources().getDrawable(R.mipmap.ic_stared, getTheme());
+                drawable.setBounds(0,0,w,w);
+                rt_book_detail_collect.setCompoundDrawables(null, drawable, null, null);
+            }
+            tag_group.setTags(bindBook.getKeywords().split(" "));
+        }
+    }
+
+    private void initClickEvents(){
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BookDetailActivity.this.finish();
+            }
+        });
+
+        rt_book_detail_collect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (LoginUtils.isLogined(preference)){
+                    CollectionAsyncTask<Integer> task = new CollectionAsyncTask<>();
+                    task.setType(CollectionAsyncTask.TYPE_CHANGE);
+                    task.execute(LoginUtils.getAccount(preference), bindBook.getId() + "", isCollected ? "delete" : "add");
+                    Drawable drawable = getResources().getDrawable(isCollected ? R.mipmap.ic_unstar : R.mipmap.ic_stared, getTheme());
+                    int w = CommonUtils.dip2px(BookDetailActivity.this, 35);
+                    drawable.setBounds(0,0,w,w);
+                    rt_book_detail_collect.setCompoundDrawables(null, drawable, null, null);
+                    isCollected = !isCollected;
+                }else
+                    Toast.makeText(BookDetailActivity.this, "请先登录!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+}

@@ -1,13 +1,13 @@
 package com.example.xmfy.yzubookshop.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +19,7 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.model.BookSearchBean;
 import com.example.xmfy.yzubookshop.module.buy.BaseBuyFragment;
+import com.example.xmfy.yzubookshop.module.buy.BookDetailActivity;
 import com.example.xmfy.yzubookshop.module.buy.BookSearchHelper;
 import com.example.xmfy.yzubookshop.module.buy.BookSuggestion;
 import com.example.xmfy.yzubookshop.module.buy.SearchResultsListAdapter;
@@ -28,6 +29,7 @@ import com.example.xmfy.yzubookshop.net.CollectionAsyncTask;
 import com.example.xmfy.yzubookshop.utils.CommonUtils;
 import com.example.xmfy.yzubookshop.utils.LoginUtils;
 import com.example.xmfy.yzubookshop.widget.RichText;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -202,7 +204,9 @@ public class BuyFragment extends BaseBuyFragment {
         mSearchResultsAdapter.setItemsOnClickListener(new SearchResultsListAdapter.OnItemClickListener() {
             @Override
             public void onClick(BookSearchBean book) {
-                Log.e("buy", book.toString());
+                Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+                intent.putExtra("book", new Gson().toJson(book));
+                startActivity(intent);
             }
         });
         mSearchResultsAdapter.setCollectsClickListener(new SearchResultsListAdapter.OnCollectsClickListener() {

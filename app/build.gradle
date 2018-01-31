@@ -47,6 +47,7 @@ dependencies {
     compile 'com.contrarywind:Android-PickerView:3.2.7'
     compile 'com.github.arimorty:floatingsearchview:2.1.1'
     compile 'com.github.Jay-Goo:RangeSeekBar:v1.2.0'
+    compile 'me.gujun.android.taggroup:library:1.4@aar'
 
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->

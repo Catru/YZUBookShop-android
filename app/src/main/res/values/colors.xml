@@ -29,4 +29,13 @@
     <color name="menubar_active">#E2752F</color>
 
 
+    <!-- color for book detail -->
+    <color name="PureBlack">#000000</color>
+    <color name="PriceOrange">#FD5300</color>
+    <color name="DefaultTextColor">#828282</color>
+    
+    <!-- color for tag-->
+    <color name="tag_border">#FFFFFF</color>
+    <color name="tag_bg">#FFEBEA</color>
+    <color name="tag_text">#433837</color>
 </resources>
