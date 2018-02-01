@@ -20,6 +20,7 @@ public class CollectionAsyncTask<T> extends AsyncTask<String, Void, String>{
 
     public static final int TYPE_CHANGE = 1;
     public static final int TYPE_QUERY = 2;
+    public static final int TYPE_VIEWS_ADD = 3;
 
     private int type = 1;
     private AsyncResponse<T> asyncResponse;
@@ -44,6 +45,8 @@ public class CollectionAsyncTask<T> extends AsyncTask<String, Void, String>{
                 return OKHttpUtils.doPostWithParams(AppConstants.COLLECTS_CHANGE, formBody);
             case TYPE_QUERY:
                 return OKHttpUtils.doGetWithSingleParam(AppConstants.COLLECTS_QUERY, "account", strings[0]);
+            case TYPE_VIEWS_ADD:
+                return OKHttpUtils.doGetWithSingleParam(AppConstants.SINGLE_VIEW_ADD, "id", strings[0]);
             default:
                 return "";
         }

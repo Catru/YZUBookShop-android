@@ -34,6 +34,7 @@
                 android:layout_marginStart="5dp"
                 android:clipToPadding="false"
                 />
+
         </LinearLayout>
 
         <com.arlib.floatingsearchview.FloatingSearchView
@@ -51,6 +52,16 @@
             app:floatingSearch_searchHint="Search..."
             app:floatingSearch_showSearchKey="true"
             app:floatingSearch_suggestionsListAnimDuration="250" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:src="@mipmap/ic_launcher"
+            android:layout_margin="10dp"
+            app:borderWidth="0dp"
+            />
 
     </android.support.design.widget.CoordinatorLayout>
 

@@ -48,4 +48,6 @@ public class AppConstants {
     public static final String COLLECTS_CHANGE = "http://192.168.1.100:8080/collect/change";
 
     public static final String COLLECTS_QUERY = "http://192.168.1.100:8080/collect/query";
+
+    public static final String SINGLE_VIEW_ADD = "http://192.168.1.100:8080/buy/singleViewAdd";
 }

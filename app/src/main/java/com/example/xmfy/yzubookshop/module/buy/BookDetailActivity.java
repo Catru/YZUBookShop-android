@@ -3,8 +3,11 @@ package com.example.xmfy.yzubookshop.module.buy;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +22,9 @@ import com.example.xmfy.yzubookshop.utils.LoginUtils;
 import com.example.xmfy.yzubookshop.widget.RichText;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.gujun.android.taggroup.TagGroup;
 
 public class BookDetailActivity extends AppCompatActivity {
@@ -29,7 +35,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     private Button btn_back;
 
-    private ImageView iv_book_detail_pics;
+    private ViewPager vp_book_detail_pics;
     private TextView tv_book_detail_title;
     private TextView tv_book_detail_author;
     private TextView tv_book_detail_price;
@@ -42,6 +48,8 @@ public class BookDetailActivity extends AppCompatActivity {
     private Button btn_cart;
     private Button btn_buy;
 
+    private List<ImageView> imgs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +60,9 @@ public class BookDetailActivity extends AppCompatActivity {
     }
 
     private void bindView() {
+        imgs = new ArrayList<>();
         btn_back = (Button) findViewById(R.id.toolbar_left_btn);
-        iv_book_detail_pics = (ImageView) findViewById(R.id.iv_book_detail_pics);
+        vp_book_detail_pics = (ViewPager) findViewById(R.id.vp_book_detail_pics);
         tv_book_detail_title = (TextView) findViewById(R.id.tv_book_detail_title);
         tv_book_detail_author = (TextView) findViewById(R.id.tv_book_detail_author);
         tv_book_detail_price = (TextView) findViewById(R.id.tv_book_detail_price);
@@ -72,8 +81,40 @@ public class BookDetailActivity extends AppCompatActivity {
 
     private void loadData() {
         bindBook = new Gson().fromJson(getIntent().getStringExtra("book"), BookSearchBean.class);
+        CollectionAsyncTask<Integer> task = new CollectionAsyncTask<>();
+        task.setType(CollectionAsyncTask.TYPE_VIEWS_ADD);
+        task.execute(bindBook.getId()+"");
         if (bindBook != null){
-            Glide.with(this).load(bindBook.getPhotoUrl().split(" ")[0]).into(iv_book_detail_pics);
+            final String[] urls = bindBook.getPhotoUrl().split(" ");
+            for (String url : urls){
+                ImageView iv = new ImageView(this);
+                iv.setAdjustViewBounds(true);
+                iv.setScaleType(ImageView.ScaleType.CENTER);
+                imgs.add(iv);
+                Glide.with(this).load(url).into(iv);
+            }
+            vp_book_detail_pics.setAdapter(new PagerAdapter() {
+                @Override
+                public int getCount() {
+                    return imgs.size();
+                }
+
+                @Override
+                public boolean isViewFromObject(View view, Object object) {
+                    return view == object;
+                }
+
+                @Override
+                public Object instantiateItem(ViewGroup container, int position) {
+                    container.addView(imgs.get(position));
+                    return imgs.get(position);
+                }
+
+                @Override
+                public void destroyItem(ViewGroup container, int position, Object object) {
+                    container.removeView(imgs.get(position));
+                }
+            });
             tv_book_detail_title.setText(bindBook.getTitle());
             tv_book_detail_author.setText("作者:" + bindBook.getAuthor());
             tv_book_detail_price.setText(String.format("%.2f", bindBook.getPrice()));
