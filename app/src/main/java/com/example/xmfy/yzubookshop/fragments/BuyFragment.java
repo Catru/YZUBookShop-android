@@ -18,13 +18,17 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.model.BookSearchBean;
+import com.example.xmfy.yzubookshop.model.FormedData;
 import com.example.xmfy.yzubookshop.module.buy.BaseBuyFragment;
 import com.example.xmfy.yzubookshop.module.buy.BookDetailActivity;
 import com.example.xmfy.yzubookshop.module.buy.BookSearchHelper;
 import com.example.xmfy.yzubookshop.module.buy.BookSuggestion;
 import com.example.xmfy.yzubookshop.module.buy.SearchResultsListAdapter;
+import com.example.xmfy.yzubookshop.module.buy.searchTab.CartActivity;
 import com.example.xmfy.yzubookshop.module.buy.searchTab.ClassifyTab;
 import com.example.xmfy.yzubookshop.module.buy.searchTab.SearchConditions;
+import com.example.xmfy.yzubookshop.net.AsyncResponse;
+import com.example.xmfy.yzubookshop.net.CartAsyncTask;
 import com.example.xmfy.yzubookshop.net.CollectionAsyncTask;
 import com.example.xmfy.yzubookshop.utils.CommonUtils;
 import com.example.xmfy.yzubookshop.utils.LoginUtils;
@@ -32,6 +36,8 @@ import com.example.xmfy.yzubookshop.widget.RichText;
 import com.google.gson.Gson;
 
 import java.util.List;
+
+import cn.bingoogolapple.badgeview.BGABadgeFloatingActionButton;
 
 /**
  * Created by xmfy on 2018/1/3.
@@ -52,6 +58,7 @@ public class BuyFragment extends BaseBuyFragment {
     private FloatingSearchView mSearchView;
     private RecyclerView mSearchResultsList;
     private SearchResultsListAdapter mSearchResultsAdapter;
+    private BGABadgeFloatingActionButton fab_cart;
 
     private RichText rt_buy_sort;
     private RichText rt_buy_category;
@@ -80,9 +87,11 @@ public class BuyFragment extends BaseBuyFragment {
         super.onViewCreated(view, savedInstanceState);
         bindView();
         initWidgets();
+        setUpActionBtn();
         setupFloatingSearch();
         setupResultsList();
         setupDrawer();
+        initDataList();
     }
 
     private void bindView() {
@@ -91,6 +100,7 @@ public class BuyFragment extends BaseBuyFragment {
         rt_buy_sort = view.findViewById(R.id.rt_buy_sort);
         rt_buy_category = view.findViewById(R.id.rt_buy_category);
         rt_buy_price = view.findViewById(R.id.rt_buy_price);
+        fab_cart = view.findViewById(R.id.fab_cart);
     }
 
     private void initWidgets() {
@@ -108,6 +118,34 @@ public class BuyFragment extends BaseBuyFragment {
         uncollected.setBounds(0, 0, w, w);
 
         preferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+
+        if (LoginUtils.isLogined(preferences)){
+            CartAsyncTask<Integer> task = new CartAsyncTask<>(CartAsyncTask.TYPE_QUERY_COUNT, new AsyncResponse<Integer>() {
+                @Override
+                public void onDataReceivedSuccess(FormedData<Integer> formedData) {
+                    fab_cart.showTextBadge(formedData.getData()+"");
+                }
+
+                @Override
+                public void onDataReceivedFailed() {
+
+                }
+            });
+            task.execute(LoginUtils.getAccount(preferences));
+        }
+    }
+
+    private void setUpActionBtn(){
+        fab_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!LoginUtils.isLogined(preferences)){
+                    Toast.makeText(context, "请您登录后再使用购物车!", Toast.LENGTH_SHORT).show();
+                }else {
+                    startActivity(new Intent(context, CartActivity.class));
+                }
+            }
+        });
     }
 
     private void setupFloatingSearch() {
@@ -227,6 +265,16 @@ public class BuyFragment extends BaseBuyFragment {
                 }
             }
         });
+    }
+
+    private void initDataList(){
+        BookSearchHelper.findBooks(getActivity(), searchConditions,
+                new BookSearchHelper.OnFindColorsListener() {
+                    @Override
+                    public void onResults(List<BookSearchBean> results) {
+                        mSearchResultsAdapter.swapData(results);
+                    }
+                });
     }
 
     @Override

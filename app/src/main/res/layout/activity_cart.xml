@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.xmfy.yzubookshop.widget.CustomToolBar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:left_btn_src="@drawable/icon_back"
+    app:left_btn_visible="true"
+    app:title_text="我的购物车"
+    app:title_visible="true"
+    android:background="@color/divider_color">
+
+    <ListView
+        android:id="@+id/lv_cartList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/PureWhite"
+        android:divider="@drawable/divider_cart_big" />
+
+</com.example.xmfy.yzubookshop.widget.CustomToolBar>

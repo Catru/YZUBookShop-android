@@ -50,4 +50,12 @@ public class AppConstants {
     public static final String COLLECTS_QUERY = "http://192.168.1.100:8080/collect/query";
 
     public static final String SINGLE_VIEW_ADD = "http://192.168.1.100:8080/buy/singleViewAdd";
+
+    public static final String CART_QUERY = "http://192.168.1.100:8080/cart/queryByAccount";
+
+    public static final String CART_INSERT= "http://192.168.1.100:8080/cart/insertCart";
+
+    public static final String CART_DELETE = "http://192.168.1.100:8080/cart/deleteById";
+
+    public static final String CART_QUERY_COUNT = "http://192.168.1.100:8080/cart/queryBookCount";
 }

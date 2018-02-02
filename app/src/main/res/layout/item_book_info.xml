@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/PureWhite"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <CheckBox
+        android:id="@+id/cb_bookinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:checked="true"
+        android:layout_marginLeft="10dp"/>
+
+    <ImageView
+        android:id="@+id/iv_bookinfo_cover"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/icon_book_sample"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_bookinfo_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_clo"
+            android:textSize="18sp"
+            android:textColorHint="@color/text_clo"
+            android:fontFamily="Helvetica"
+            android:hint="书名"
+            android:maxLines="2"/>
+
+        <TextView
+            android:id="@+id/tv_bookinfo_author"
+            android:paddingLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/editText_clo"
+            android:textSize="16sp"
+            android:textColorHint="@color/editText_clo"
+            android:fontFamily="Helvetica"
+            android:hint="作者"
+            android:maxLines="2"/>
+
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_bookinfo_c1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/editText_clo"
+                android:textSize="16sp"
+                android:textColorHint="@color/editText_clo"
+                android:fontFamily="Helvetica"
+                android:hint="类型1"
+                android:maxLines="2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:textColor="@color/editText_clo"
+                android:text="->"
+                android:textSize="16sp"
+                android:fontFamily="Helvetica"
+                android:maxLines="2"/>
+
+            <TextView
+                android:id="@+id/tv_bookinfo_c2"
+                android:paddingLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/editText_clo"
+                android:fontFamily="Helvetica"
+                android:textSize="16sp"
+                android:textColorHint="@color/editText_clo"
+                android:hint="类型2"
+                android:maxLines="2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥ "
+                android:textColor="@color/PriceColor"
+                android:textSize="20sp"
+                android:maxLines="2"/>
+
+            <TextView
+                android:id="@+id/tv_bookinfo_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/PriceColor"
+                android:fontFamily="Helvetica"
+                android:textSize="16sp"
+                android:textColorHint="@color/PriceColor"
+                android:hint="0.00" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

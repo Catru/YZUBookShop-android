@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@drawable/divider_cart_small"
+    android:showDividers="middle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/PureWhite"
+    android:orientation="vertical">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/PureWhite">
+        <CheckBox
+            android:id="@+id/cb_collection"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:checked="true"
+            tools:ignore="RtlSymmetry" />
+        <com.example.xmfy.yzubookshop.widget.RichText
+            android:id="@+id/rt_seller"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:gravity="left|center_vertical"
+            app:drawable_src="@mipmap/ic_shop"
+            app:drawable_location="left"
+            app:drawable_height="35dp"
+            app:drawable_width="35dp"
+            android:drawablePadding="5dp"
+            android:text="卖主"
+            android:textSize="18sp"
+            android:textColor="@color/DefaultTextColor"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/lv_bookInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/divider_cart_small" />
+
+</LinearLayout>

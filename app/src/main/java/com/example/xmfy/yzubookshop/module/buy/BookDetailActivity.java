@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.model.BookSearchBean;
+import com.example.xmfy.yzubookshop.model.FormedData;
+import com.example.xmfy.yzubookshop.net.AsyncResponse;
+import com.example.xmfy.yzubookshop.net.CartAsyncTask;
 import com.example.xmfy.yzubookshop.net.CollectionAsyncTask;
 import com.example.xmfy.yzubookshop.utils.CommonUtils;
 import com.example.xmfy.yzubookshop.utils.LoginUtils;
@@ -154,6 +157,28 @@ public class BookDetailActivity extends AppCompatActivity {
                     isCollected = !isCollected;
                 }else
                     Toast.makeText(BookDetailActivity.this, "请先登录!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btn_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CartAsyncTask<Integer> task = new CartAsyncTask<>(CartAsyncTask.TYPE_INSERT, new AsyncResponse<Integer>() {
+                    @Override
+                    public void onDataReceivedSuccess(FormedData<Integer> formedData) {
+                        if (formedData.isSuccess()){
+                            Toast.makeText(BookDetailActivity.this, "添加成功,点击购物车查看", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(BookDetailActivity.this, formedData.getError(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onDataReceivedFailed() {
+                        Toast.makeText(BookDetailActivity.this, "网络异常,请检查相关设置!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                task.execute(bindBook.getAccount(), bindBook.getId()+"", bindBook.getPrice()+"", LoginUtils.getAccount(preference));
             }
         });
 
