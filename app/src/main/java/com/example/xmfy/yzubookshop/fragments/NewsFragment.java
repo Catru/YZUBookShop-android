@@ -1,6 +1,6 @@
 package com.example.xmfy.yzubookshop.fragments;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,27 +15,22 @@ import android.widget.Toast;
 
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.global.AppConstants;
-import com.example.xmfy.yzubookshop.model.News;
-import com.example.xmfy.yzubookshop.net.AsyncResponse;
-import com.example.xmfy.yzubookshop.net.CustomedAsync;
 import com.example.xmfy.yzubookshop.model.Carousel;
 import com.example.xmfy.yzubookshop.model.FormedData;
-import com.example.xmfy.yzubookshop.utils.DownloadUtils;
+import com.example.xmfy.yzubookshop.model.News;
 import com.example.xmfy.yzubookshop.module.banner.CarouselImageLoader;
+import com.example.xmfy.yzubookshop.module.news.NewsActivity;
 import com.example.xmfy.yzubookshop.module.news.NewsAdapter;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.example.xmfy.yzubookshop.net.AsyncResponse;
+import com.example.xmfy.yzubookshop.net.CustomedAsync;
+import com.example.xmfy.yzubookshop.net.NewsAsyncTask;
+import com.example.xmfy.yzubookshop.utils.DownloadUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by xmfy on 2018/1/3.
@@ -45,8 +39,8 @@ public class NewsFragment extends Fragment {
     private View view;
     private Banner banner;
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private List<News> newsList;
+    private NewsAdapter mAdapter;
     private int BANNER_SIZE = 5;
     private int NEWS_SIZE = 10;
     private String STORAGE_FOLDER = "banner";
@@ -136,43 +130,41 @@ public class NewsFragment extends Fragment {
     }
 
     private void initNewsList() {
-        new NewsAsyncTask().execute(AppConstants.NEWS_ADDRESS + "?size=" + NEWS_SIZE);
+        mRecyclerView = view.findViewById(R.id.view_newslist);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+        DividerItemDecoration divider = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.custom_rc_divider));
+        mRecyclerView.addItemDecoration(divider);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        newsList = new ArrayList<>();
+        mAdapter = new NewsAdapter(getContext(), newsList);
+        mAdapter.setmItemsOnClickListener(new NewsAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(String url) {
+                Intent intent = new Intent(getContext(), NewsActivity.class);
+                intent.putExtra("url", url);
+                startActivity(intent);
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
+
+        NewsAsyncTask task = new NewsAsyncTask();
+        task.setAsyncResponse(new AsyncResponse<List<News>>() {
+            @Override
+            public void onDataReceivedSuccess(FormedData<List<News>> formedData) {
+                if (formedData.isSuccess()){
+                    newsList = formedData.getData();
+                    mAdapter.update(newsList);
+                } else
+                    Toast.makeText(getContext(), formedData.getError(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDataReceivedFailed() {
+                Toast.makeText(getContext(), "网络连接错误，请检查相关设置！", Toast.LENGTH_SHORT).show();
+            }
+        });
+        task.execute(NEWS_SIZE+"");
     }
 
-    private String getNewsList(String url){
-        String data = null;
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url).build();
-        Response response;
-        try {
-            response = client.newCall(request).execute();
-            data = response.body().string();
-        }catch (IOException e){
-            Log.e("News", "获取新闻列表失败");
-        }
-        return data;
-    }
-
-
-    class NewsAsyncTask extends AsyncTask<String, Void, String>{
-        @Override
-        protected String doInBackground(String... strings) {
-            return getNewsList(strings[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String data) {
-            super.onPostExecute(data);
-            Gson gson = new Gson();
-            FormedData<List<News>> formedData = gson.fromJson(data, new TypeToken<FormedData<List<News>>>(){}.getType());
-            mRecyclerView = view.findViewById(R.id.view_newslist);
-            mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
-            DividerItemDecoration divider = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-            divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.custom_rc_divider));
-            mRecyclerView.addItemDecoration(divider);
-            mAdapter = new NewsAdapter(getActivity(), formedData.getData(), mRecyclerView);
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mRecyclerView.setAdapter(mAdapter);
-        }
-    }
 }

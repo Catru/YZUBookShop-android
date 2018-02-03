@@ -23,8 +23,8 @@ import com.example.xmfy.yzubookshop.module.buy.BaseBuyFragment;
 import com.example.xmfy.yzubookshop.module.buy.BookDetailActivity;
 import com.example.xmfy.yzubookshop.module.buy.BookSearchHelper;
 import com.example.xmfy.yzubookshop.module.buy.BookSuggestion;
+import com.example.xmfy.yzubookshop.module.buy.CartActivity;
 import com.example.xmfy.yzubookshop.module.buy.SearchResultsListAdapter;
-import com.example.xmfy.yzubookshop.module.buy.searchTab.CartActivity;
 import com.example.xmfy.yzubookshop.module.buy.searchTab.ClassifyTab;
 import com.example.xmfy.yzubookshop.module.buy.searchTab.SearchConditions;
 import com.example.xmfy.yzubookshop.net.AsyncResponse;
@@ -94,6 +94,12 @@ public class BuyFragment extends BaseBuyFragment {
         initDataList();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setCartCount();
+    }
+
     private void bindView() {
         mSearchView = view.findViewById(R.id.floating_search_view);
         mSearchResultsList = view.findViewById(R.id.search_results_list);
@@ -119,6 +125,10 @@ public class BuyFragment extends BaseBuyFragment {
 
         preferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
 
+        setCartCount();
+    }
+
+    private void setCartCount(){
         if (LoginUtils.isLogined(preferences)){
             CartAsyncTask<Integer> task = new CartAsyncTask<>(CartAsyncTask.TYPE_QUERY_COUNT, new AsyncResponse<Integer>() {
                 @Override
@@ -174,7 +184,7 @@ public class BuyFragment extends BaseBuyFragment {
 
                 BookSuggestion bookSuggestion = (BookSuggestion) searchSuggestion;
                 BookSearchHelper.findBooks(getActivity(), bookSuggestion.getType(), bookSuggestion.getBody(),
-                        new BookSearchHelper.OnFindColorsListener() {
+                        new BookSearchHelper.OnFindBooksListener() {
                             @Override
                             public void onResults(List<BookSearchBean> results) {
                                 mSearchResultsAdapter.swapData(results);
@@ -187,7 +197,7 @@ public class BuyFragment extends BaseBuyFragment {
             public void onSearchAction(String query) {
                 mLastQuery = query;
                 BookSearchHelper.findBooks(getActivity(), searchConditions,
-                        new BookSearchHelper.OnFindColorsListener() {
+                        new BookSearchHelper.OnFindBooksListener() {
                             @Override
                             public void onResults(List<BookSearchBean> results) {
                                 mSearchResultsAdapter.swapData(results);
@@ -214,7 +224,7 @@ public class BuyFragment extends BaseBuyFragment {
                 if (item.getItemId() == R.id.action_search) {
                     String query = mSearchView.getQuery();
                     BookSearchHelper.findBooks(getActivity(), searchConditions,
-                            new BookSearchHelper.OnFindColorsListener() {
+                            new BookSearchHelper.OnFindBooksListener() {
                                 @Override
                                 public void onResults(List<BookSearchBean> results) {
                                     mSearchResultsAdapter.swapData(results);
@@ -247,6 +257,7 @@ public class BuyFragment extends BaseBuyFragment {
                 startActivity(intent);
             }
         });
+
         mSearchResultsAdapter.setCollectsClickListener(new SearchResultsListAdapter.OnCollectsClickListener() {
             @Override
             public void onClick(RichText rt, BookSearchBean book) {
@@ -265,11 +276,12 @@ public class BuyFragment extends BaseBuyFragment {
                 }
             }
         });
+
     }
 
     private void initDataList(){
         BookSearchHelper.findBooks(getActivity(), searchConditions,
-                new BookSearchHelper.OnFindColorsListener() {
+                new BookSearchHelper.OnFindBooksListener() {
                     @Override
                     public void onResults(List<BookSearchBean> results) {
                         mSearchResultsAdapter.swapData(results);

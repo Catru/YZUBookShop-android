@@ -1,7 +1,6 @@
 package com.example.xmfy.yzubookshop.net;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.example.xmfy.yzubookshop.global.AppConstants;
 import com.example.xmfy.yzubookshop.model.Delivery;
@@ -82,8 +81,13 @@ public class DeliveryAsyncTask extends AsyncTask<String, Void, String>{
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         Gson gson = new Gson();
-        FormedData data = gson.fromJson(s, new TypeToken<FormedData<List<Delivery>>>(){}.getType());
-        onResponse(data);
+        if (type == METHOD_SET_DEFAULT_LOCATION){
+            FormedData data = gson.fromJson(s, new TypeToken<FormedData<Integer>>(){}.getType());
+            onResponse(data);
+        }else {
+            FormedData data = gson.fromJson(s, new TypeToken<FormedData<List<Delivery>>>(){}.getType());
+            onResponse(data);
+        }
     }
 
     private void onResponse(FormedData data){

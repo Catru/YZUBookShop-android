@@ -36,7 +36,7 @@ public class BookSearchHelper {
             new BookSuggestion("author","东野圭吾")
     ));
 
-    public interface OnFindColorsListener {
+    public interface OnFindBooksListener {
         void onResults(List<BookSearchBean> results);
     }
 
@@ -56,7 +56,7 @@ public class BookSearchHelper {
         return suggestionList;
     }
 
-    public static void resetSuggestionsHistory() {
+    private static void resetSuggestionsHistory() {
         for (BookSuggestion bookSuggestion : bookSuggestions)
             bookSuggestion.setHistory(false);
     }
@@ -87,10 +87,9 @@ public class BookSearchHelper {
 //        }
     }
 
-    public static void findBooks(final Context context, String type, String value, final OnFindColorsListener listener) {
+    public static void findBooks(final Context context, String type, String value, final OnFindBooksListener listener) {
         initBookList(context);
-        BookSearchAsyncTask<List<BookSearchBean>> task = new BookSearchAsyncTask<>();
-        task.setResponseType(new TypeToken<FormedData<List<BookSearchBean>>>(){});
+        BookSearchAsyncTask task = new BookSearchAsyncTask(BookSearchAsyncTask.QUERY_BY_TYPE);
         task.setAsyncResponse(new AsyncResponse<List<BookSearchBean>>() {
             @Override
             public void onDataReceivedSuccess(FormedData<List<BookSearchBean>> formedData) {
@@ -109,10 +108,9 @@ public class BookSearchHelper {
         task.execute(type, value, LoginUtils.getAccount(context.getSharedPreferences("User", Context.MODE_PRIVATE)));
     }
 
-    public static void findBooks(final Context context, SearchConditions conditions, final OnFindColorsListener listener) {
+    public static void findBooks(final Context context, SearchConditions conditions, final OnFindBooksListener listener) {
         initBookList(context);
-        BookSearchAsyncTask<List<BookSearchBean>> task = new BookSearchAsyncTask<>();
-        task.setResponseType(new TypeToken<FormedData<List<BookSearchBean>>>(){});
+        BookSearchAsyncTask task = new BookSearchAsyncTask(BookSearchAsyncTask.QUERY_NORMAL);
         task.setAsyncResponse(new AsyncResponse<List<BookSearchBean>>() {
             @Override
             public void onDataReceivedSuccess(FormedData<List<BookSearchBean>> formedData) {

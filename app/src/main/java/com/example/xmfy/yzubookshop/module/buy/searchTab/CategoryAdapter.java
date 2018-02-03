@@ -16,13 +16,13 @@ import java.util.List;
 /**
  * Created by xmfy on 2018/1/29.
  */
-public class CategoryAdapter<T extends Category> extends BaseAdapter{
+public class CategoryAdapter<T extends Category> extends BaseAdapter {
 
     private Context context;
     private List<T> cList;
     private int checked = -1;
 
-    public CategoryAdapter(Context context, List<T> cList) {
+    CategoryAdapter(Context context, List<T> cList) {
         this.cList = cList;
         this.context = context;
     }
@@ -32,15 +32,15 @@ public class CategoryAdapter<T extends Category> extends BaseAdapter{
         notifyDataSetChanged();
     }
 
-    public int getChecked() {
+    int getChecked() {
         return checked;
     }
 
-    public void setChecked(int checked) {
+    void setChecked(int checked) {
         this.checked = checked;
     }
 
-    public int getCurrentId(){
+    int getCurrentId() {
         if (checked == -1)
             return -1;
         return cList.get(checked).getId();
@@ -75,17 +75,17 @@ public class CategoryAdapter<T extends Category> extends BaseAdapter{
         Category c = cList.get(i);
         viewHolder.id = c.getId();
         viewHolder.tv_buy_category.setText(c.getName());
-        viewHolder.tv_buy_category.setTextColor(context.getResources().getColor(i==checked?R.color.menubar_active:R.color.menubar_default, context.getTheme()));
-        viewHolder.iv_buy_category_checked.setVisibility(i==checked ? View.VISIBLE : View.GONE);
+        viewHolder.tv_buy_category.setTextColor(context.getResources().getColor(i == checked ? R.color.menubar_active : R.color.menubar_default, context.getTheme()));
+        viewHolder.iv_buy_category_checked.setVisibility(i == checked ? View.VISIBLE : View.GONE);
         return v;
     }
 
     class ViewHolder {
         public int id;
-        public TextView tv_buy_category;
-        public ImageView iv_buy_category_checked;
+        TextView tv_buy_category;
+        ImageView iv_buy_category_checked;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             tv_buy_category = view.findViewById(R.id.tv_buy_sort);
             iv_buy_category_checked = view.findViewById(R.id.iv_buy_sort_checked);
         }

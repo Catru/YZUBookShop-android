@@ -5,13 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.xmfy.yzubookshop.R;
 import com.example.xmfy.yzubookshop.model.Delivery;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,37 +21,34 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.ViewHo
 
     private Context context;
     private List<Delivery> deliveryList;
-    public List<RadioButton> radioButtonList;
-    public List<TextView> editTextList;
-    public List<TextView> deleteTextList;
-    private LoadFinishedListener loadFinishedListener;
+    private OnClickOperationListener onClickOperationListener;
+    private OnClickCheckBoxListener onClickCheckBoxListener;
 
-    public DeliveryAdapter(Context context, List<Delivery> deliveryList) {
+    DeliveryAdapter(Context context, List<Delivery> deliveryList) {
         this.context = context;
         this.deliveryList = deliveryList;
-        radioButtonList = new ArrayList<>();
-        editTextList = new ArrayList<>();
-        deleteTextList = new ArrayList<>();
     }
 
-    public void setLoadFinishedListener(LoadFinishedListener loadFinishedListener) {
-        this.loadFinishedListener = loadFinishedListener;
+    void setOnClickOperationListerner(OnClickOperationListener onClickOperationListener) {
+        this.onClickOperationListener = onClickOperationListener;
     }
 
-    public void updateData(List<Delivery> data) {
+    void setOnClickCheckBoxListener(OnClickCheckBoxListener onClickCheckBoxListener) {
+        this.onClickCheckBoxListener = onClickCheckBoxListener;
+    }
+
+    void updateData(List<Delivery> data) {
         this.deliveryList = data;
         notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(context).inflate(R.layout.item_delivery, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_delivery, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int i) {
+    public void onBindViewHolder(final ViewHolder holder, final int i) {
         Delivery d = deliveryList.get(i);
         holder.tv_delivery_receiver.setText(d.getReceiver());
         holder.tv_delivery_phone.setText(d.getPhone());
@@ -59,16 +56,31 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.ViewHo
         holder.rb_delivery_default.setChecked(d.getDefaults() == 1);
         holder.rb_delivery_default.setTag(R.id.delivery_id, d.getId());
         holder.rb_delivery_default.setTag(R.id.delivery_account, d.getAccount());
-        if(!radioButtonList.contains(holder.rb_delivery_default))
-            radioButtonList.add(holder.rb_delivery_default);
-        holder.tv_delivery_edit.setTag(R.id.delivery_item, d);
-        if (!editTextList.contains(holder.tv_delivery_edit))
-            editTextList.add(holder.tv_delivery_edit);
-        holder.tv_delivery_delete.setTag(R.id.delivery_id, d.getId());
-        if(!deleteTextList.contains(holder.tv_delivery_delete))
-            deleteTextList.add(holder.tv_delivery_delete);
-        if (i == deliveryList.size()-1)
-            loadFinishedListener.onLoadFinished();
+        if (onClickOperationListener != null){
+            holder.tv_delivery_edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickOperationListener.click(1, i);
+                }
+            });
+
+            holder.tv_delivery_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickOperationListener.click(2, i);
+                }
+            });
+        }
+
+        if (onClickCheckBoxListener != null){
+            holder.rb_delivery_default.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b)
+                        onClickCheckBoxListener.click(i);
+                }
+            });
+        }
     }
 
     @Override
@@ -76,7 +88,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.ViewHo
         return deliveryList == null ? 0 : deliveryList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_delivery_receiver;
         TextView tv_delivery_phone;
@@ -85,7 +97,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.ViewHo
         TextView tv_delivery_edit;
         TextView tv_delivery_delete;
 
-        public ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
             tv_delivery_receiver = v.findViewById(R.id.tv_delivery_receiver);
             tv_delivery_phone = v.findViewById(R.id.tv_delivery_phone);
@@ -96,8 +108,12 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.ViewHo
         }
     }
 
-    interface LoadFinishedListener{
-        void onLoadFinished();
+    public interface OnClickOperationListener{
+        void click(int type, int position);
+    }
+
+    public interface OnClickCheckBoxListener{
+        void click(int position);
     }
 
 }

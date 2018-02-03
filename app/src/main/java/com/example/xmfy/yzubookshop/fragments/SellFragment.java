@@ -145,7 +145,7 @@ public class SellFragment extends Fragment {
     private class deleteClickListener implements DialogInterface.OnClickListener {
         private int position;
 
-        public deleteClickListener(int position) {
+        deleteClickListener(int position) {
             this.position = position;
         }
 

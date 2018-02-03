@@ -118,15 +118,15 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         return bookList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView iv_buy_pic;
-        public final TextView tv_buy_title;
-        public final TextView tv_buy_author;
-        public final TextView tv_buy_price;
-        public final RichText rt_buy_views;
-        public final RichText rt_buy_collects;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        final ImageView iv_buy_pic;
+        final TextView tv_buy_title;
+        final TextView tv_buy_author;
+        final TextView tv_buy_price;
+        final RichText rt_buy_views;
+        final RichText rt_buy_collects;
 
-        public ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
             iv_buy_pic = v.findViewById(R.id.iv_buy_pics);
             tv_buy_title = v.findViewById(R.id.tv_buy_title);

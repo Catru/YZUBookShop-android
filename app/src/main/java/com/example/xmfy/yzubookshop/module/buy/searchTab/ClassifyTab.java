@@ -183,17 +183,21 @@ public class ClassifyTab {
                     categoryAdapter1.setChecked(i);
                     categoryAdapter2.update(cList2.get(categoryAdapter1.getChecked()));
                     lv_category_right.setVisibility(View.VISIBLE);
-                    searchConditions.setC2(categoryAdapter1.getCurrentId());
+                    searchConditions.setC2(categoryAdapter2.getCurrentId());
                 }
                 categoryAdapter1.notifyDataSetChanged();
-                searchConditions.setC1(cList1.get(categoryAdapter1.getChecked()).getId());
+                searchConditions.setC1(categoryAdapter1.getCurrentId());
             }
         });
 
         lv_category_right.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                categoryAdapter2.setChecked(i);
+                if(categoryAdapter2.getChecked() == i){
+                    categoryAdapter2.setChecked(-1);
+                }else {
+                    categoryAdapter2.setChecked(i);
+                }
                 categoryAdapter2.notifyDataSetChanged();
                 searchConditions.setC2(categoryAdapter2.getCurrentId());
             }

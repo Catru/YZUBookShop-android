@@ -15,7 +15,57 @@
         android:id="@+id/lv_cartList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@color/PureWhite"
         android:divider="@drawable/divider_cart_big" />
+
+    <LinearLayout
+        android:id="@+id/bottom_bar_cart"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal"
+        android:background="@drawable/layout_border">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="合计:   "
+            android:textColor="@color/PureBlack"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="￥"
+            android:textColor="@color/PriceColor"
+            />
+
+        <TextView
+            android:id="@+id/tv_cart_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="0.00"
+            android:textColor="@color/PriceColor"
+            />
+
+        <Button
+            android:id="@+id/btn_cart_order"
+            android:text="提交订单"
+            android:layout_marginLeft="40dp"
+            android:textSize="22sp"
+            android:fontFamily="Helvetica"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@color/DarkCyan"/>
+    </LinearLayout>
 
 </com.example.xmfy.yzubookshop.widget.CustomToolBar>

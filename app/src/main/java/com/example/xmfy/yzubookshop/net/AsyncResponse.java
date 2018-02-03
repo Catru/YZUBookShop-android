@@ -7,5 +7,6 @@ import com.example.xmfy.yzubookshop.model.FormedData;
  */
 public interface AsyncResponse<T> {
     void onDataReceivedSuccess(FormedData<T> formedData);
+
     void onDataReceivedFailed();
 }

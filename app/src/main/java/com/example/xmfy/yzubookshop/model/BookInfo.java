@@ -4,6 +4,7 @@ package com.example.xmfy.yzubookshop.model;
  * Created by xmfy on 2018/2/2.
  */
 public class BookInfo{
+    private int id;
     private int bookId;
     private String urls;
     private String title;
@@ -15,7 +16,8 @@ public class BookInfo{
     public BookInfo() {
     }
 
-    public BookInfo(int bookId, String urls, String title, String author, int category1, int category2, float price) {
+    public BookInfo(int id, int bookId, String urls, String title, String author, int category1, int category2, float price) {
+        this.id = id;
         this.bookId = bookId;
         this.urls = urls;
         this.title = title;
@@ -23,6 +25,14 @@ public class BookInfo{
         this.category1 = category1;
         this.category2 = category2;
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getBookId() {
@@ -84,7 +94,8 @@ public class BookInfo{
     @Override
     public String toString() {
         return "BookInfo{" +
-                "bookId=" + bookId +
+                "id=" + id +
+                ", bookId=" + bookId +
                 ", urls='" + urls + '\'' +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +

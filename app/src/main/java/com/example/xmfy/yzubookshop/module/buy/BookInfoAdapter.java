@@ -1,7 +1,6 @@
 package com.example.xmfy.yzubookshop.module.buy;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +27,23 @@ public class BookInfoAdapter extends BaseAdapter {
 
     private Context context;
     private List<BookInfo> bookInfos;
-    private List<CheckBox> checkBoxes;
+    private boolean[] cb_status;
+    private OnPriceChangeListener onPriceChangeListener;
 
-    public BookInfoAdapter(Context context, List<BookInfo> bookInfos) {
+    public interface OnPriceChangeListener{
+        void onChange(float price);
+    }
+
+    void setOnPriceChangeListener(OnPriceChangeListener onPriceChangeListener) {
+        this.onPriceChangeListener = onPriceChangeListener;
+    }
+
+    BookInfoAdapter(Context context, List<BookInfo> bookInfos) {
         this.context = context;
         this.bookInfos = bookInfos;
-        checkBoxes = new ArrayList<>();
+        cb_status = new boolean[bookInfos.size()];
+        for (int i = 0; i<cb_status.length; i++)
+            cb_status[i] = true;
     }
 
     public void update(List<BookInfo> bookInfos) {
@@ -57,8 +67,8 @@ public class BookInfoAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View v, ViewGroup viewGroup) {
-        ViewHolder holder;
+    public View getView(final int i, View v, ViewGroup viewGroup) {
+        final ViewHolder holder;
         if (v == null) {
             v = LayoutInflater.from(context).inflate(R.layout.item_book_info, viewGroup, false);
             holder = new ViewHolder(v);
@@ -66,12 +76,14 @@ public class BookInfoAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) v.getTag();
         }
-        if (checkBoxes.size() < i + 1)
-            checkBoxes.add(holder.cb_bookinfo);
         holder.cb_bookinfo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.e("cart", "  "+ b);
+                cb_status[i] = b;
+                float change = Float.parseFloat(holder.tv_bookinfo_price.getText().toString());
+                if (onPriceChangeListener != null){
+                    onPriceChangeListener.onChange(b?change:-change);
+                }
             }
         });
         BookInfo info = bookInfos.get(i);
@@ -83,13 +95,6 @@ public class BookInfoAdapter extends BaseAdapter {
         holder.tv_bookinfo_c2.setText(map.get(2));
         holder.tv_bookinfo_price.setText(String.format("%.2f", info.getPrice()));
         return v;
-    }
-
-    void updateCheckBox(boolean b){
-        Log.e("cart", b + "   " + checkBoxes.size());
-        Log.e("cart", bookInfos.toString());
-        for (CheckBox checkBox : checkBoxes)
-            checkBox.setChecked(b);
     }
 
     class ViewHolder {
@@ -110,5 +115,14 @@ public class BookInfoAdapter extends BaseAdapter {
             tv_bookinfo_c2 = v.findViewById(R.id.tv_bookinfo_c2);
             tv_bookinfo_price = v.findViewById(R.id.tv_bookinfo_price);
         }
+    }
+
+    List<BookInfo> getCheckedBookInfos(){
+        List<BookInfo> list = new ArrayList<>();
+        for (int i = 0;i<bookInfos.size();i++){
+            if (cb_status[i])
+                list.add(bookInfos.get(i));
+        }
+        return list;
     }
 }

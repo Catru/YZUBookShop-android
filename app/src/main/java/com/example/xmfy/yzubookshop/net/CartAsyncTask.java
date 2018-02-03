@@ -32,6 +32,10 @@ public class CartAsyncTask<T> extends AsyncTask<String, Void, String> {
         this.asyncResponse = asyncResponse;
     }
 
+    public CartAsyncTask(int type) {
+        this.type = type;
+    }
+
     public void setType(int type) {
         this.type = type;
     }
@@ -55,6 +59,10 @@ public class CartAsyncTask<T> extends AsyncTask<String, Void, String> {
                 return OKHttpUtils.doGetWithSingleParam(AppConstants.CART_QUERY_COUNT, "buyer", strings[0]);
             case TYPE_QUERY:
                 return OKHttpUtils.doGetWithSingleParam(AppConstants.CART_QUERY, "buyer", strings[0]);
+            case TYPE_DELETE:
+                FormBody body1 = new FormBody.Builder()
+                        .add("id", strings[0]).build();
+                return OKHttpUtils.doPostWithParams(AppConstants.CART_DELETE, body1);
         }
         return "";
     }
