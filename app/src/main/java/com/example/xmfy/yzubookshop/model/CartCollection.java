@@ -7,6 +7,8 @@ import java.util.List;
  */
 public class CartCollection {
 
+    private String sellerId;
+
     private String seller;
 
     private List<BookInfo> books;
@@ -14,9 +16,18 @@ public class CartCollection {
     public CartCollection() {
     }
 
-    public CartCollection(String seller, List<BookInfo> books) {
+    public CartCollection(String sellerId, String seller, List<BookInfo> books) {
+        this.sellerId = sellerId;
         this.seller = seller;
         this.books = books;
+    }
+
+    public String getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
     }
 
     public String getSeller() {
@@ -38,7 +49,8 @@ public class CartCollection {
     @Override
     public String toString() {
         return "CartCollection{" +
-                "seller='" + seller + '\'' +
+                "sellerId='" + sellerId + '\'' +
+                ", seller='" + seller + '\'' +
                 ", books=" + books +
                 '}';
     }

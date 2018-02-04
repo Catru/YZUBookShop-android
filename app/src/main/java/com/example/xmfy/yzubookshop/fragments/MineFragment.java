@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.xmfy.yzubookshop.R;
+import com.example.xmfy.yzubookshop.module.buy.CartActivity;
+import com.example.xmfy.yzubookshop.module.order.OrderActivity;
 import com.example.xmfy.yzubookshop.module.user.CollectionActivity;
 import com.example.xmfy.yzubookshop.module.user.DeliveryActivity;
 import com.example.xmfy.yzubookshop.module.user.LoginActivity;
@@ -37,6 +39,8 @@ public class MineFragment extends Fragment implements View.OnClickListener{
     private LinearLayout ll_personal_infor;
     private LinearLayout ll_mycollection;
     private LinearLayout ll_receive_address;
+    private LinearLayout ll_query_cart;
+    private LinearLayout ll_management_orders;
     private ImageView civ_headshot;
 
     public MineFragment() {
@@ -80,10 +84,14 @@ public class MineFragment extends Fragment implements View.OnClickListener{
         ll_personal_infor = view.findViewById(R.id.ll_personal_infor);
         ll_mycollection = view.findViewById(R.id.ll_mycollection);
         ll_receive_address = view.findViewById(R.id.ll_receive_address);
+        ll_query_cart = view.findViewById(R.id.ll_query_cart);
+        ll_management_orders = view.findViewById(R.id.ll_management_orders);
         civ_headshot = view.findViewById(R.id.civ_headshot);
         ll_personal_infor.setOnClickListener(this);
         ll_mycollection.setOnClickListener(this);
         ll_receive_address.setOnClickListener(this);
+        ll_query_cart.setOnClickListener(this);
+        ll_management_orders.setOnClickListener(this);
     }
 
     @Override
@@ -101,6 +109,12 @@ public class MineFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.ll_receive_address:
                 startActivity(new Intent(getActivity(), DeliveryActivity.class));
+                break;
+            case R.id.ll_query_cart:
+                startActivity(new Intent(getActivity(), CartActivity.class));
+                break;
+            case R.id.ll_management_orders:
+                startActivity(new Intent(getActivity(), OrderActivity.class));
                 break;
         }
     }

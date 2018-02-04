@@ -173,12 +173,12 @@ public class CartCollectionAdapter extends BaseAdapter {
         listView.setLayoutParams(params);
     }
 
-    public List<CartCollection> getCheckedBooks(){
+    List<CartCollection> getCheckedBooks(){
         List<CartCollection> list = new ArrayList<>();
         for (int i = 0;i<cList.size();i++){
             List<BookInfo> books = adapters.get(i).getCheckedBookInfos();
             if (books.size() > 0)
-                list.add(new CartCollection(cList.get(i).getSeller(), books));
+                list.add(new CartCollection(cList.get(i).getSellerId(), cList.get(i).getSeller(), books));
         }
         return list;
     }

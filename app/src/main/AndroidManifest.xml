@@ -54,7 +54,8 @@
             android:name=".module.user.CollectionActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".module.buy.BookDetailActivity" />
-        <activity android:name=".module.buy.CartActivity"></activity>
+        <activity android:name=".module.buy.CartActivity" />
+        <activity android:name=".module.order.OrderActivity"></activity>
     </application>
 
 </manifest>

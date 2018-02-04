@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FAFAFA"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/iv_order_cover"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_margin="20dp"
+        android:scaleType="fitXY"
+        />
+    
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_order_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_clo"
+            android:textSize="18sp"
+            android:maxLines="2"/>
+
+        <TextView
+            android:id="@+id/tv_order_author"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/editText_clo"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_order_category"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/editText_clo"
+            android:textSize="16sp"/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/tv_order_price"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/PriceColor"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -2,7 +2,6 @@ package com.example.xmfy.yzubookshop.module.buy;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -15,6 +14,7 @@ import com.example.xmfy.yzubookshop.model.CartCollection;
 import com.example.xmfy.yzubookshop.model.FormedData;
 import com.example.xmfy.yzubookshop.net.AsyncResponse;
 import com.example.xmfy.yzubookshop.net.CartAsyncTask;
+import com.example.xmfy.yzubookshop.net.OrderAsyncTask;
 import com.example.xmfy.yzubookshop.utils.LoginUtils;
 
 import java.util.ArrayList;
@@ -34,11 +34,15 @@ public class CartActivity extends AppCompatActivity {
 
     CartCollectionAdapter adapter;
 
+    private String account;
+
+    private OrderAsyncTask<Integer> insertTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        bindView();
+        initView();
         loadData();
         initClickEvents();
     }
@@ -80,21 +84,42 @@ public class CartActivity extends AppCompatActivity {
                 if (list.size() == 0){
                     Toast.makeText(CartActivity.this, "请添加需要购买的图书", Toast.LENGTH_SHORT).show();
                 }else {
-                    Log.e("cart", list.toString());
+//                    StringBuilder builder = new StringBuilder();
+//                    for (CartCollection c : list){
+//                        for (BookInfo b : c.getBooks()){
+//                            builder.append(b.getBookId()).append(",");
+//                        }
+//                    }
+//                    builder.deleteCharAt(builder.length()-1);
+//                    OrderAsyncTask<Integer> validTask = new OrderAsyncTask<>(OrderAsyncTask.VALID, new AsyncResponse<Integer>() {
+//                        @Override
+//                        public void onDataReceivedSuccess(FormedData<Integer> formedData) {
+//                            if (formedData.isSuccess()){
+//                                insertTask.execute(account, new Gson().toJson(adapter.getCheckedBooks().toString(), new TypeToken<List<CartCollection>>(){}.getType()));
+//                            }else {
+//                                Toast.makeText(CartActivity.this, formedData.getError(), Toast.LENGTH_SHORT).show();
+//                                loadData();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onDataReceivedFailed() {
+//                            Toast.makeText(CartActivity.this, "网络连接出错，请稍后再试！", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                    validTask.execute(account, builder.toString());
+                    Toast.makeText(CartActivity.this, "网络连接出错，请稍后再试！", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
 
-    private void bindView(){
+    private void initView(){
         lv_cartList = (ListView) findViewById(R.id.lv_cartList);
         tv_cart_price = (TextView) findViewById(R.id.tv_cart_price);
         btn_back = (Button) findViewById(R.id.toolbar_left_btn);
         btn_cart_order = (Button) findViewById(R.id.btn_cart_order);
-    }
-
-    private void loadData(){
         cList = new ArrayList<>();
         adapter = new CartCollectionAdapter(CartActivity.this, cList);
         adapter.setOnPriceChangeListener(new BookInfoAdapter.OnPriceChangeListener() {
@@ -105,7 +130,27 @@ public class CartActivity extends AppCompatActivity {
             }
         });
         lv_cartList.setAdapter(adapter);
-        CartAsyncTask<List<CartCollection>> task = new CartAsyncTask<>(CartAsyncTask.TYPE_QUERY, new AsyncResponse<List<CartCollection>>() {
+        account = LoginUtils.getAccount(getSharedPreferences("User", MODE_PRIVATE));
+
+        insertTask = new OrderAsyncTask<>(OrderAsyncTask.INSERT, new AsyncResponse<Integer>() {
+            @Override
+            public void onDataReceivedSuccess(FormedData<Integer> formedData) {
+                if (formedData.isSuccess()){
+                    Toast.makeText(CartActivity.this, "生成订单成功! 请关注订单管理界面！", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(CartActivity.this, formedData.getError(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onDataReceivedFailed() {
+                Toast.makeText(CartActivity.this, "网络连接出错，请稍后再试！", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadData(){
+        CartAsyncTask<List<CartCollection>> cartQueryTask = new CartAsyncTask<>(CartAsyncTask.TYPE_QUERY, new AsyncResponse<List<CartCollection>>() {
             @Override
             public void onDataReceivedSuccess(FormedData<List<CartCollection>> formedData) {
                 if (formedData.isSuccess()){
@@ -122,7 +167,9 @@ public class CartActivity extends AppCompatActivity {
 
             }
         });
-        task.execute(LoginUtils.getAccount(getSharedPreferences("User", MODE_PRIVATE)));
+
+        cartQueryTask.execute(LoginUtils.getAccount(getSharedPreferences("User", MODE_PRIVATE)));
+
     }
 
     private void initPrice(List<CartCollection> list){
@@ -134,4 +181,5 @@ public class CartActivity extends AppCompatActivity {
         }
         tv_cart_price.setText(String.format("%.2f", price));
     }
+
 }

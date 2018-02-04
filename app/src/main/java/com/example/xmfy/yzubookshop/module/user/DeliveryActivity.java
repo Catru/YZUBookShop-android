@@ -76,6 +76,8 @@ public class DeliveryActivity extends AppCompatActivity {
                 if (formedData.isSuccess()) {
                     deliveryList = formedData.getData();
                     adapter.updateData(deliveryList);
+                    if (deliveryList.size() == 0)
+                        Toast.makeText(DeliveryActivity.this, "请您及时添加收货地址!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(DeliveryActivity.this, formedData.getError(), Toast.LENGTH_SHORT).show();
                 }
@@ -116,7 +118,6 @@ public class DeliveryActivity extends AppCompatActivity {
                                         @Override
                                         public void onDataReceivedSuccess(FormedData formedData) {
                                             if (formedData.isSuccess()) {
-                                                Toast.makeText(DeliveryActivity.this, "删除成功!", Toast.LENGTH_SHORT).show();
                                                 loadContent();
                                             } else
                                                 Toast.makeText(DeliveryActivity.this, "删除失败!", Toast.LENGTH_SHORT).show();
@@ -136,7 +137,6 @@ public class DeliveryActivity extends AppCompatActivity {
         btn_delivery_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("delivery", "add");
                 startActivity(new Intent(DeliveryActivity.this, DeliveryDetailActivity.class));
             }
         });
